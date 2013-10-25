@@ -11,7 +11,6 @@ namespace Examonitor.Models
 {
     public class MyUser : IdentityUser
     {
-        public string HomeTown { get; set; }
         public string Email { get; set; }
         public virtual ICollection<ToDo> ToDoes { get; set; }
     }
@@ -41,6 +40,5 @@ namespace Examonitor.Models
 
         public System.Data.Entity.DbSet<Examonitor.Models.ToDo> ToDoes { get; set; }
     }
-
 
 }

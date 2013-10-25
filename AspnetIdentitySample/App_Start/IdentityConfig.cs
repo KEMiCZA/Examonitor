@@ -36,7 +36,6 @@ namespace Examonitor
             //Create User=Admin with password=123456
             var user = new MyUser();
             user.UserName = name;
-            user.HomeTown = "Seattle";
             var adminresult = UserManager.Create(user, password);
 
             //Add User Admin to Role Admin

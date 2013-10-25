@@ -71,7 +71,7 @@ namespace Examonitor.Controllers
             {
                 var user = new MyUser();
                 user.UserName = userViewModel.UserName;
-                user.HomeTown = userViewModel.HomeTown;
+                user.Email = userViewModel.Email;
                 var adminresult = await UserManager.CreateAsync(user, userViewModel.Password);
 
                 //Add User Admin to Role Admin
@@ -128,7 +128,7 @@ namespace Examonitor.Controllers
         // POST: /Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "UserName,Id,HomeTown")] MyUser formuser, string id, string RoleId)
+        public async Task<ActionResult> Edit([Bind(Include = "UserName,Id,Email")] MyUser formuser, string id, string RoleId)
         {
             if (id == null)
             {
@@ -137,7 +137,7 @@ namespace Examonitor.Controllers
             ViewBag.RoleId = new SelectList(RoleManager.Roles, "Id", "Name");
             var user = await UserManager.FindByIdAsync(id);
             user.UserName = formuser.UserName;
-            user.HomeTown = formuser.HomeTown;
+            user.Email = formuser.Email;
             if (ModelState.IsValid)
             {
                 //Update the user details

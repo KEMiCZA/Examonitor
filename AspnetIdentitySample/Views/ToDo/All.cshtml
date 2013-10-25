@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AspnetIdentitySample.Models.ToDo>
+﻿@model IEnumerable<Examonitor.Models.ToDo>
 
 @{
     ViewBag.Title = "Index";
@@ -20,7 +20,7 @@
             @Html.DisplayNameFor(model => model.IsDone)
         </th>
         <th>@Html.DisplayNameFor(model => model.User.UserName)</th>
-        <th>@Html.DisplayNameFor(model => model.User.HomeTown)</th>
+        <th>@Html.DisplayNameFor(model => model.User.Email)</th>
     </tr>
 
     @foreach (var item in Model)
@@ -36,7 +36,7 @@
                 @Html.DisplayFor(modelItem => item.User.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.HomeTown)
+                @Html.DisplayFor(modelItem => item.User.Email)
             </td>
         </tr>
     }

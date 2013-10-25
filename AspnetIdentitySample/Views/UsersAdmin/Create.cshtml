@@ -1,4 +1,4 @@
-﻿@model AspnetIdentitySample.Models.RegisterViewModel
+﻿@model Examonitor.Models.RegisterViewModel
 @{
     ViewBag.Title = "Create";
 }
@@ -33,12 +33,6 @@
             </div>
         </div>
 
-        <div class="control-group">
-            @Html.LabelFor(m => m.HomeTown, new { @class = "control-label" })
-            <div class="controls">
-                @Html.TextBoxFor(m => m.HomeTown)
-            </div>
-        </div>
         <h4>Select Role for User</h4>
         <hr />
         @Html.DropDownList("RoleId","No Roles")

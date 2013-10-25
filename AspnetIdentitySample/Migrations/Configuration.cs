@@ -10,7 +10,7 @@ namespace Examonitor.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "AspnetIdentitySample.Models.MyDbContext";
+            ContextKey = "Examonitor.Models.MyDbContext";
         }
 
         protected override void Seed(Examonitor.Models.MyDbContext context)

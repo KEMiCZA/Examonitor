@@ -1,6 +1,11 @@
 AspnetIdentitySample
 ====================
 
+Right Click on Solution -> Manage NuGet Packages... -> Settings (Left Bottom)
+-> Package Sources -> Add https://www.myget.org/F/aspnetwebstacknightly/ -> OK And restart Visual Studio
+Execute command: install-package Microsoft.Aspnet.Identity.EntityFramework -Pre
+Restart Visual Studio
+
 <h3>Running this sample</h3>
 <ul>
 <li>This sample uses the Nightly builds of ASP.NET Identity. Please refer to this article http://blogs.msdn.com/b/webdev/archive/2013/10/09/asp-net-identity-nuget-packages-for-the-nightly-builds-are-available-on-myget.aspx 

@@ -28,7 +28,7 @@ namespace Examonitor.Controllers
             var currentUser = manager.FindById(User.Identity.GetUserId()); 
             
             // Recover the profile information about the logged in user
-            ViewBag.HomeTown = currentUser.HomeTown;
+            
             ViewBag.Email = currentUser.Email;
             return View();
         }

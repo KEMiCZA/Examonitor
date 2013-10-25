@@ -79,7 +79,6 @@ namespace Examonitor.Controllers
             if (ModelState.IsValid)
             {
                 var user = new MyUser() { UserName = model.UserName };
-                user.HomeTown = model.HomeTown;
                 user.Email = model.Email;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
