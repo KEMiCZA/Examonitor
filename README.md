@@ -10,6 +10,12 @@ Right Click on Solution -> Manage NuGet Packages... -> Settings (Left Bottom)
 Execute command: <b>install-package Microsoft.Aspnet.Identity.EntityFramework -Pre</b>
 </li>
 <li>
+Execute command: <b>enable-migrations</b>
+</li>
+<li>
+Delete all Migrations and run update-database
+</li>
+<li>
 Restart Visual Studio
 </li>
 <ul>
