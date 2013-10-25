@@ -1,10 +1,11 @@
-AspnetIdentitySample
+Examonitor
 ====================
+<h3>Configuration Instructions for Visual Studio 2013 RC</h3>
 
 Right Click on Solution -> Manage NuGet Packages... -> Settings (Left Bottom)
--> Package Sources -> Add https://www.myget.org/F/aspnetwebstacknightly/ -> OK And restart Visual Studio
-Execute command: install-package Microsoft.Aspnet.Identity.EntityFramework -Pre
-Restart Visual Studio
+-> Package Sources -> Add https://www.myget.org/F/aspnetwebstacknightly/ -> OK And restart Visual Studio< br/>
+Execute command: install-package Microsoft.Aspnet.Identity.EntityFramework -Pre< br/>
+Restart Visual Studio < br/>
 
 <h3>Running this sample</h3>
 <ul>
