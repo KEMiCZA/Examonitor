@@ -7,10 +7,6 @@ Right Click on Solution -> Manage NuGet Packages... -> Settings (Left Bottom)
 -> Package Sources -> Add https://www.myget.org/F/aspnetwebstacknightly/ -> OK And restart Visual Studio
 </li>
 <li>
-Right Click on Solution -> Manage NuGet Packages... -> Settings (Left Bottom)
--> Package Sources -> Add https://www.myget.org/F/aspnetwebstacknightly/ -> OK And restart Visual Studio
-</li>
-<li>
 Execute command: <b>install-package Microsoft.Aspnet.Identity.EntityFramework -Pre</b>
 </li>
 <li>
