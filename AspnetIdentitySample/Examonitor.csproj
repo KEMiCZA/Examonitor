@@ -106,6 +106,12 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Postal">
+      <HintPath>..\packages\postal.0.8.2\lib\net45\Postal.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>..\packages\RazorEngine.3.2.0\lib\net40\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -176,18 +182,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201310251431048_InitialCreate.cs" />
-    <Compile Include="Migrations\201310251431048_InitialCreate.Designer.cs">
-      <DependentUpon>201310251431048_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201310251431519_InitialMigration.cs" />
-    <Compile Include="Migrations\201310251431519_InitialMigration.Designer.cs">
-      <DependentUpon>201310251431519_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201310251433482_EmailFieldAddedToUser.cs" />
-    <Compile Include="Migrations\201310251433482_EmailFieldAddedToUser.Designer.cs">
-      <DependentUpon>201310251433482_EmailFieldAddedToUser.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -197,10 +191,6 @@
     <Compile Include="Controllers\ToDoController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\testDB.mdf" />
-    <Content Include="App_Data\testDB_log.ldf">
-      <DependentUpon>testDB.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -235,7 +225,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -259,8 +251,17 @@
     <Content Include="Views\ToDo\Index.cshtml" />
     <Content Include="Views\ToDo\All.cshtml" />
     <Content Include="Views\Home\Profile.cshtml" />
+    <Content Include="Views\Account\Activate.cshtml" />
+    <Content Include="Views\Emails\Activate.cshtml" />
+    <Content Include="Views\Emails\_ViewStart.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Emails\ResetPassword.cshtml" />
+    <Content Include="Views\Emails\NewPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirm.cshtml" />
+    <Content Include="Views\Account\ResendActivation.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="bin\" />
   </ItemGroup>
   <ItemGroup>
@@ -295,17 +296,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UsersAdmin\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201310251431048_InitialCreate.resx">
-      <DependentUpon>201310251431048_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201310251431519_InitialMigration.resx">
-      <DependentUpon>201310251431519_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201310251433482_EmailFieldAddedToUser.resx">
-      <DependentUpon>201310251433482_EmailFieldAddedToUser.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

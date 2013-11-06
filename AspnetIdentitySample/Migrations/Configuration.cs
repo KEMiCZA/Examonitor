@@ -9,8 +9,7 @@ namespace Examonitor.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
-            ContextKey = "Examonitor.Models.MyDbContext";
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Examonitor.Models.MyDbContext context)

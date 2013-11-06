@@ -18,6 +18,11 @@ namespace Examonitor
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Activate",
+                url: "{controller}/{action}/{c}/{i}"
+            );
         }
     }
 }

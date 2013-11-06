@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Examonitor.Models;
+using Postal;
 
 namespace Examonitor.Controllers
 {
@@ -26,6 +27,146 @@ namespace Examonitor.Controllers
         }
 
         public UserManager<MyUser> UserManager { get; private set; }
+
+        //
+        // GET: /Account/Activate
+        [AllowAnonymous]
+        public ActionResult Activate(string c, string i)
+        {
+            if (c != null && i != null)
+            {
+                try
+                {
+                    var result = UserManager.ConfirmUser(i, c);
+
+                    if (result.Succeeded)
+                    {
+                        ViewBag.StatusMessage = "Account activation successful, you can now log in using your username and password.";
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Invalid confirmation code.");
+                    }
+                }
+                catch(InvalidOperationException)
+                {
+                    ModelState.AddModelError("", "Invalid user ID.");
+                }
+               
+            }
+            else if(c == null && i == null)
+            {
+                ViewBag.StatusMessage = "Please check your email for instructions on how to activate your account.";
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid user ID or confirmation code.");
+            }
+
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public ActionResult ResetPassword(string userName)
+        {
+            var user = UserManager.FindByName(userName);
+
+            if (user != null)
+            {
+                dynamic email = new Email("ResetPassword");
+                email.To = user.Email;
+                email.UserName = user.UserName;
+                email.UserId = user.Id;
+                email.ConfirmationToken = UserManager.GetPasswordResetToken(user.Id);
+                email.Send();
+
+                ViewBag.StatusMessage = "Please check your email for instructions on how to reset your password.";
+            }
+            else
+            {
+                ModelState.AddModelError("", "Unknown user.");
+            }
+
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResetPasswordConfirm(string c, string i)
+        {
+            var user = UserManager.FindById(i);
+
+            if (user != null)
+            {
+                string newPassword = System.Web.Security.Membership.GeneratePassword(14, 4);
+                var result = UserManager.ResetPassword(i, c, newPassword);
+
+                if (result.Succeeded)
+                {
+                    dynamic email = new Email("NewPassword");
+                    email.To = user.Email;
+                    email.UserName = user.UserName;
+                    email.Password = newPassword;
+                    email.Send();
+
+                    ViewBag.StatusMessage = "A new password has been generated and emailed to you. Check your email for instructions on how to login and change your password.";
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Incorrect confirmation code.");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Incorrect user ID.");
+            }
+
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResendActivation()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public ActionResult ResendActivation(string userName)
+        {
+            var mailUser = UserManager.FindByName(userName);
+
+            if (mailUser != null && !mailUser.IsConfirmed)
+            {
+                dynamic email = new Email("Activate");
+                email.To = mailUser.Email;
+                email.UserName = mailUser.UserName;
+                email.UserId = mailUser.Id;
+                email.ConfirmationToken = UserManager.GetConfirmationToken(mailUser.Id);
+                email.Send();
+
+                return RedirectToAction("Activate");
+            }
+            else if(mailUser != null && mailUser.IsConfirmed)
+            {
+                ModelState.AddModelError("", "User has already been confirmed.");
+
+            }
+            else
+            {
+                ModelState.AddModelError("", "Unknown user.");
+            }
+
+            return View();
+        }
 
         //
         // GET: /Account/Login
@@ -46,10 +187,14 @@ namespace Examonitor.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindAsync(model.UserName, model.Password);
-                if (user != null)
+                if (user != null && user.IsConfirmed == true)
                 {
                     await SignInAsync(user, model.RememberMe);
                     return RedirectToLocal(returnUrl);
+                }
+                else if(user != null)
+                {
+                    ModelState.AddModelError("", "Account needs to be activated first.");
                 }
                 else
                 {
@@ -83,8 +228,18 @@ namespace Examonitor.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    var mailUser = UserManager.FindByName(model.UserName);
+
+                    dynamic email = new Email("Activate");
+                    email.To = mailUser.Email;
+                    email.UserName = mailUser.UserName;
+                    email.UserId = mailUser.Id;
+                    email.ConfirmationToken = UserManager.GetConfirmationToken(mailUser.Id);
+                    email.Send();
+
+                    //Don't log in, activate account first
+                    //await SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Activate");
                 }
                 else
                 {
