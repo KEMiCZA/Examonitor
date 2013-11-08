@@ -55,11 +55,11 @@ namespace Examonitor.Controllers
             }
             return View(monitorbeurtmodel);
         }
-        public ActionResult Reserveren(int? id)
-        {
-            return View();
+        //public ActionResult Reserveren(int? id)
+        //{
+        //    return View(Reservatie);
 
-        }
+        //}
 
         // GET: /MonitorBeurt/Create
         public ActionResult Create()

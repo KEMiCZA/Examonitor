@@ -1,0 +1,55 @@
+﻿@model Examonitor.Models.ReservatieModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>ReservatieModel</legend>
+
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.Toezichtbeurt.Start)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Toezichtbeurt.Start)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AangemaaktOp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AangemaaktOp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AangepastOp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AangepastOp)
+        </dd>
+
+    </dl>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}

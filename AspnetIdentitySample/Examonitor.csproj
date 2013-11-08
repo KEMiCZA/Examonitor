@@ -170,10 +170,15 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MonitorBeurtController.cs" />
+    <Compile Include="Controllers\ReservatieController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201311081526037_aa.cs" />
+    <Compile Include="Migrations\201311081526037_aa.Designer.cs">
+      <DependentUpon>201311081526037_aa.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -260,6 +265,11 @@
     <Content Include="Views\MonitorBeurt\Details.cshtml" />
     <Content Include="Views\MonitorBeurt\Edit.cshtml" />
     <Content Include="Views\MonitorBeurt\Index.cshtml" />
+    <Content Include="Views\Reservatie\Create.cshtml" />
+    <Content Include="Views\Reservatie\Delete.cshtml" />
+    <Content Include="Views\Reservatie\Details.cshtml" />
+    <Content Include="Views\Reservatie\Edit.cshtml" />
+    <Content Include="Views\Reservatie\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -297,6 +307,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UsersAdmin\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201311081526037_aa.resx">
+      <DependentUpon>201311081526037_aa.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

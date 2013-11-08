@@ -14,7 +14,7 @@ namespace Examonitor.Models
         public int ReservatieId { get; set; }
         public int ToezichtbeurtId { get; set; }
 
-        public int UserName { get; set; }
+        public string UserId { get; set; }
         [Display(Name = "Aangemaakt op")]
         [DataType(DataType.Date)]
 

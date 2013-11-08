@@ -1,0 +1,63 @@
+﻿@model Examonitor.Models.ReservatieModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset class="form-horizontal">
+        <legend>ReservatieModel</legend>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.ToezichtbeurtId, "ToezichtbeurtId", new { @class = "control-label" })
+            <div class="controls">
+                @Html.DropDownList("ToezichtbeurtId", String.Empty)
+                @Html.ValidationMessageFor(model => model.ToezichtbeurtId, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.UserName, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(model => model.UserName)
+                @Html.ValidationMessageFor(model => model.UserName, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.AangemaaktOp, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(model => model.AangemaaktOp)
+                @Html.ValidationMessageFor(model => model.AangemaaktOp, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.AangepastOp, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(model => model.AangepastOp)
+                @Html.ValidationMessageFor(model => model.AangepastOp, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Create" class="btn" />
+        </div>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

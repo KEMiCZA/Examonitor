@@ -1,0 +1,49 @@
+﻿@model Examonitor.Models.ReservatieModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>ReservatieModel</legend>
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.Toezichtbeurt.Start)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Toezichtbeurt.Start)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AangemaaktOp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AangemaaktOp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AangepastOp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AangepastOp)
+        </dd>
+
+    </dl>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ReservatieId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
