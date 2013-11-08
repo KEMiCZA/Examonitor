@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Examonitor.Models.MonitorBeurtModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Monitor beurten</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    @using (Html.BeginForm("Index", "MonitorBeurt", FormMethod.Get))
+    {
+    <p>
+        Departement: @Html.DropDownList("MonitorBeurtDepartement", "All")
+        Campus: @Html.TextBox("SearchString")
+        <input type="submit" value="Filter" />
+    </p>
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Datum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Start)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Einde)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duurtijd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Capaciteit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gereserveerd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AangemaaktOp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aangepast)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Soort)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Campus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Departement)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Datum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Start)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Einde)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Duurtijd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Capaciteit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gereserveerd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AangemaaktOp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Aangepast)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Soort)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Campus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Departement)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MonitorBeurtId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MonitorBeurtId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MonitorBeurtId })
+            @Html.ActionLink("Reserveren", "Reserveren", new { id = item.MonitorBeurtId })
+        </td>
+    </tr>
+}
+
+</table>

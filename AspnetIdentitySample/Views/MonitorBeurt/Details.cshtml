@@ -1,0 +1,105 @@
+﻿@model Examonitor.Models.MonitorBeurtModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>MonitorBeurtModel</legend>
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.Datum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Datum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Start)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Start)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Einde)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Einde)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duurtijd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duurtijd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Capaciteit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Capaciteit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gereserveerd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gereserveerd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AangemaaktOp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AangemaaktOp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aangepast)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aangepast)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Soort)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Soort)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Campus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Campus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Departement)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Departement)
+        </dd>
+
+    </dl>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.MonitorBeurtId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
