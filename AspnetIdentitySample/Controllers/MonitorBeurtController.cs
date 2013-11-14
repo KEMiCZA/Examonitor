@@ -12,7 +12,7 @@ namespace Examonitor.Controllers
 {
     public class MonitorBeurtController : Controller
     {
-        private ExamenMonitorDbContext db = new ExamenMonitorDbContext();
+        private MyDbContext db = new MyDbContext();
 
         // GET: /MonitorBeurt/
         public ActionResult Index(string MonitorBeurtDepartement,string searchString)

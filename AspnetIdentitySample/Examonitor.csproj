@@ -179,7 +179,6 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\AppModel.cs" />
-    <Compile Include="Models\ExamenMonitorDbContext.cs" />
     <Compile Include="Models\MonitorBeurtModel.cs" />
     <Compile Include="Models\ReservatieModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
