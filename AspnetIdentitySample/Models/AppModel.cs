@@ -25,7 +25,7 @@ namespace Examonitor.Models
     public class MyDbContext : IdentityDbContext<MyUser>
     {
         public MyDbContext()
-            : base("DefaultConnection")
+            : base("Examonitor")
         {
         }
 
@@ -39,6 +39,8 @@ namespace Examonitor.Models
         }
 
         public System.Data.Entity.DbSet<Examonitor.Models.ToDo> ToDoes { get; set; }
+        public DbSet<MonitorBeurtModel> MonitorBeurt { get; set; }
+        public DbSet<ReservatieModel> Reservatie { get; set; }
     }
 
 }
