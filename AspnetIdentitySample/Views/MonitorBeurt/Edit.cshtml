@@ -89,12 +89,12 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Campus, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Campus)
-                @Html.ValidationMessageFor(model => model.Campus, null, new { @class = "help-inline" })
-            </div>
-        </div>
+            @Html.LabelFor(model => model.Campus.Name, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("CampusId")
+                    </div>
+                </div>
+        
 
         <div class="form-actions no-color">
             <input type="submit" value="Save" class="btn" />

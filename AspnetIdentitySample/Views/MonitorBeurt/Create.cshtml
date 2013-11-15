@@ -87,13 +87,18 @@
             </div>
         </div>
 
-        @Html.DropDownList("CampusId")
-
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Create" class="btn" />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Campus.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CampusId")
+            </div>
         </div>
-    </fieldset>
+
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Create" class="btn" />
+                        </div>
+</fieldset>
 }
 
 <div>

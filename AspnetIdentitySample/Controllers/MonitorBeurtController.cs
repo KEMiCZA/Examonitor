@@ -101,8 +101,10 @@ namespace Examonitor.Controllers
         }
 
         // GET: /MonitorBeurt/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
+            ViewBag.CampusId = new SelectList(await db.Campus.ToListAsync(), "Id", "Name");
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -122,10 +124,12 @@ namespace Examonitor.Controllers
 		// Example: public ActionResult Update([Bind(Include="ExampleProperty1,ExampleProperty2")] Model model)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(MonitorBeurtModel monitorbeurtmodel)
+        public ActionResult Edit(MonitorBeurtModel monitorbeurtmodel, int CampusId)
         {
             if (ModelState.IsValid)
             {
+                var CampusList = db.Campus.ToList().Where(campus => campus.Id == CampusId);
+                monitorbeurtmodel.Campus = CampusList.First();
                 db.Entry(monitorbeurtmodel).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
