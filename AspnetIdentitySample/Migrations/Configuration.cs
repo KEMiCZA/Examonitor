@@ -50,37 +50,37 @@ namespace Examonitor.Migrations
             }
             base.Seed(context);
 
-             context.MonitorBeurt.AddOrUpdate(i => i.MonitorBeurtId,
-                new MonitorBeurtModel
-                {
-                    Datum = DateTime.Parse("2013/10/18"),
-                    Start = "8:30",
-                    Einde = "10:30",
-                    Duurtijd = "2:30",
-                    Capaciteit = 2,
-                    Gereserveerd = 0,
-                    AangemaaktOp = DateTime.Parse("2013/10/18"),
-                    Aangepast = DateTime.Parse("2013/10/18"),
-                    Soort = "Digitaal",
-                    Campus = "BouwmeesterStraat",
-                    Departement = "ONDERWIJS EN TRAINING"
+             //context.MonitorBeurt.AddOrUpdate(i => i.MonitorBeurtId,
+             //   new MonitorBeurtModel
+             //   {
+             //       Datum = DateTime.Parse("2013/10/18"),
+             //       Start = "8:30",
+             //       Einde = "10:30",
+             //       Duurtijd = "2:30",
+             //       Capaciteit = 2,
+             //       Gereserveerd = 0,
+             //       AangemaaktOp = DateTime.Parse("2013/10/18"),
+             //       Aangepast = DateTime.Parse("2013/10/18"),
+             //       Soort = "Digitaal",
+             //       Campus = "BouwmeesterStraat",
+             //       Departement = "ONDERWIJS EN TRAINING"
 
-                },
-                new MonitorBeurtModel
-                {
-                    Datum = DateTime.Parse("2013/10/18"),
-                    Start = "8:30",
-                    Einde = "10:30",
-                    Duurtijd = "2:30",
-                    Capaciteit = 2,
-                    Gereserveerd = 0,
-                    AangemaaktOp = DateTime.Parse("2013/10/18"),
-                    Aangepast = DateTime.Parse("2013/10/18"),
-                    Soort = "Digitaal",
-                    Campus = "Meistraat",
-                    Departement = "IT"
+             //   },
+             //   new MonitorBeurtModel
+             //   {
+             //       Datum = DateTime.Parse("2013/10/18"),
+             //       Start = "8:30",
+             //       Einde = "10:30",
+             //       Duurtijd = "2:30",
+             //       Capaciteit = 2,
+             //       Gereserveerd = 0,
+             //       AangemaaktOp = DateTime.Parse("2013/10/18"),
+             //       Aangepast = DateTime.Parse("2013/10/18"),
+             //       Soort = "Digitaal",
+             //       Campus = "Meistraat",
+             //       Departement = "IT"
 
-                });
+             //   });
        
         }
     }

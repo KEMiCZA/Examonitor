@@ -87,21 +87,8 @@
             </div>
         </div>
 
-        <div class="control-group">
-            @Html.LabelFor(model => model.Campus, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EditorFor(model => model.Campus)
-                @Html.ValidationMessageFor(model => model.Campus, null, new { @class = "help-inline" })
-            </div>
-        </div>
+        @Html.DropDownList("CampusId", "Empty")
 
-        <div class="control-group">
-            @Html.LabelFor(model => model.Departement, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EditorFor(model => model.Departement)
-                @Html.ValidationMessageFor(model => model.Departement, null, new { @class = "help-inline" })
-            </div>
-        </div>
 
         <div class="form-actions no-color">
             <input type="submit" value="Create" class="btn" />

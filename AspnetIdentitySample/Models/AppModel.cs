@@ -15,6 +15,12 @@ namespace Examonitor.Models
         public virtual ICollection<ToDo> ToDoes { get; set; }
     }
 
+    public class Campus
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
     public class ToDo
     {
         public int Id { get; set; }
@@ -41,6 +47,7 @@ namespace Examonitor.Models
         public System.Data.Entity.DbSet<Examonitor.Models.ToDo> ToDoes { get; set; }
         public DbSet<MonitorBeurtModel> MonitorBeurt { get; set; }
         public DbSet<ReservatieModel> Reservatie { get; set; }
+        public DbSet<Campus> Campus { get; set; }
     }
 
 }
