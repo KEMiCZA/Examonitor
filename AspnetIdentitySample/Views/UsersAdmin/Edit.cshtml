@@ -16,15 +16,15 @@
 
     <fieldset class="form-horizontal">
         <legend>Edit a user.</legend>
-        <div class="control-group">
-            @Html.LabelFor(m => m.UserName, new { @class = "control-label" })
-            <div class="controls">
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
                 @Html.TextBoxFor(m => m.UserName)
             </div>
         </div>
-        <div class="control-group">
-            @Html.LabelFor(m => m.Email, new { @class = "control-label" })
-            <div class="controls">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
                 @Html.TextBoxFor(m => m.Email)
             </div>
         </div>

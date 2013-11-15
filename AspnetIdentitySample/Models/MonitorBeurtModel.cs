@@ -28,7 +28,7 @@ namespace Examonitor.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Aangepast { get; set; }
-        public string Soort { get; set; }
+        public bool Digitaal { get; set; }
         public string Campus { get; set; }
         public string Departement { get; set; }
     }

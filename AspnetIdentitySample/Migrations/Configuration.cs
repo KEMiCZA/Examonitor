@@ -61,7 +61,7 @@ namespace Examonitor.Migrations
                     Gereserveerd = 0,
                     AangemaaktOp = DateTime.Parse("2013/10/18"),
                     Aangepast = DateTime.Parse("2013/10/18"),
-                    Soort = "Digitaal",
+                    Digitaal = true,
                     Campus = "BouwmeesterStraat",
                     Departement = "ONDERWIJS EN TRAINING"
 
@@ -76,7 +76,7 @@ namespace Examonitor.Migrations
                     Gereserveerd = 0,
                     AangemaaktOp = DateTime.Parse("2013/10/18"),
                     Aangepast = DateTime.Parse("2013/10/18"),
-                    Soort = "Digitaal",
+                    Digitaal = true,
                     Campus = "Meistraat",
                     Departement = "IT"
 
