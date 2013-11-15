@@ -23,6 +23,7 @@ namespace Examonitor.Controllers
             db = new MyDbContext();
             manager = new UserManager<MyUser>(new UserStore<MyUser>(db));
         }
+        [Authorize]
         // GET: /Reservatie/
         public async Task<ActionResult> Index()
         {
@@ -150,6 +151,7 @@ namespace Examonitor.Controllers
         }
 
         // GET: /Reservatie/Delete/5
+        
         public ActionResult Delete(int? id)
         {
             if (id == null)
