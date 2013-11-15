@@ -22,6 +22,7 @@ namespace Examonitor.Controllers
             var DepartementQry = from d in db.MonitorBeurt
                            orderby d.Departement
                            select d.Departement;
+            
 
             DepartementLijst.AddRange(DepartementQry.Distinct());
             ViewBag.MonitorBeurtDepartement = new SelectList(DepartementLijst);
