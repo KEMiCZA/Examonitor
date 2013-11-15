@@ -16,93 +16,69 @@
 
         @Html.HiddenFor(model => model.MonitorBeurtId)
 
-        <div class="control-group">
-            @Html.LabelFor(model => model.Datum, new { @class = "control-label" })
-            <div class="controls">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Datum, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.Datum)
                 @Html.ValidationMessageFor(model => model.Datum, null, new { @class = "help-inline" })
             </div>
         </div>
 
-        <div class="control-group">
-            @Html.LabelFor(model => model.Start, new { @class = "control-label" })
-            <div class="controls">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Start, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.Start)
                 @Html.ValidationMessageFor(model => model.Start, null, new { @class = "help-inline" })
             </div>
         </div>
 
-        <div class="control-group">
-            @Html.LabelFor(model => model.Einde, new { @class = "control-label" })
-            <div class="controls">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Einde, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.Einde)
                 @Html.ValidationMessageFor(model => model.Einde, null, new { @class = "help-inline" })
             </div>
         </div>
 
-        <div class="control-group">
-            @Html.LabelFor(model => model.Duurtijd, new { @class = "control-label" })
-            <div class="controls">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Duurtijd, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.Duurtijd)
                 @Html.ValidationMessageFor(model => model.Duurtijd, null, new { @class = "help-inline" })
             </div>
         </div>
 
-        <div class="control-group">
-            @Html.LabelFor(model => model.Capaciteit, new { @class = "control-label" })
-            <div class="controls">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Capaciteit, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.Capaciteit)
                 @Html.ValidationMessageFor(model => model.Capaciteit, null, new { @class = "help-inline" })
             </div>
         </div>
 
-        <div class="control-group">
-            @Html.LabelFor(model => model.Gereserveerd, new { @class = "control-label" })
-            <div class="controls">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Gereserveerd, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.Gereserveerd)
                 @Html.ValidationMessageFor(model => model.Gereserveerd, null, new { @class = "help-inline" })
             </div>
         </div>
 
-        <div class="control-group">
-            @Html.LabelFor(model => model.AangemaaktOp, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EditorFor(model => model.AangemaaktOp)
-                @Html.ValidationMessageFor(model => model.AangemaaktOp, null, new { @class = "help-inline" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Digitaal, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Digitaal)
+                @Html.ValidationMessageFor(model => model.Digitaal, null, new { @class = "help-inline" })
             </div>
         </div>
 
-        <div class="control-group">
-            @Html.LabelFor(model => model.Aangepast, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EditorFor(model => model.Aangepast)
-                @Html.ValidationMessageFor(model => model.Aangepast, null, new { @class = "help-inline" })
-            </div>
-        </div>
-
-        <div class="control-group">
-            @Html.LabelFor(model => model.Soort, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EditorFor(model => model.Soort)
-                @Html.ValidationMessageFor(model => model.Soort, null, new { @class = "help-inline" })
-            </div>
-        </div>
-
-        <div class="control-group">
-            @Html.LabelFor(model => model.Campus, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EditorFor(model => model.Campus)
-                @Html.ValidationMessageFor(model => model.Campus, null, new { @class = "help-inline" })
-            </div>
-        </div>
-
-        <div class="control-group">
-            @Html.LabelFor(model => model.Departement, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EditorFor(model => model.Departement)
-                @Html.ValidationMessageFor(model => model.Departement, null, new { @class = "help-inline" })
-            </div>
-        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Campus.Name, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("CampusId")
+                    </div>
+                </div>
+        
 
         <div class="form-actions no-color">
             <input type="submit" value="Save" class="btn" />

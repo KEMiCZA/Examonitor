@@ -59,11 +59,7 @@ namespace Examonitor.Migrations
                     Duurtijd = "2:30",
                     Capaciteit = 2,
                     Gereserveerd = 0,
-                    AangemaaktOp = DateTime.Parse("2013/10/18"),
-                    Aangepast = DateTime.Parse("2013/10/18"),
-                    Soort = "Digitaal",
-                    Campus = "BouwmeesterStraat",
-                    Departement = "ONDERWIJS EN TRAINING"
+                    Digitaal = true
 
                 },
                 new MonitorBeurtModel
@@ -74,11 +70,7 @@ namespace Examonitor.Migrations
                     Duurtijd = "2:30",
                     Capaciteit = 2,
                     Gereserveerd = 0,
-                    AangemaaktOp = DateTime.Parse("2013/10/18"),
-                    Aangepast = DateTime.Parse("2013/10/18"),
-                    Soort = "Digitaal",
-                    Campus = "Meistraat",
-                    Departement = "IT"
+                    Digitaal = true
 
                 });
        

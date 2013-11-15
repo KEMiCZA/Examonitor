@@ -7,36 +7,46 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Examonitor.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Threading.Tasks;
 
 namespace Examonitor.Controllers
 {
     public class MonitorBeurtController : Controller
     {
-        private MyDbContext db = new MyDbContext();
+        public UserManager<MyUser> UserManager { get; private set; }
+        public RoleManager<IdentityRole> RoleManager { get; private set; }
+        public MyDbContext db { get; private set; }
+
+        public MonitorBeurtController()
+        {
+            db = new MyDbContext();
+            UserManager = new UserManager<MyUser>(new UserStore<MyUser>(db));
+            RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+        }
 
         // GET: /MonitorBeurt/
         public ActionResult Index(string MonitorBeurtDepartement,string searchString)
         {
-            var DepartementLijst = new List<string>();
+            var CampusLijst = new List<string>();
 
-            var DepartementQry = from d in db.MonitorBeurt
-                           orderby d.Departement
-                           select d.Departement;
-            
+            var CampusQry = from d in db.Campus
+                                 select d.Name;
 
-            DepartementLijst.AddRange(DepartementQry.Distinct());
-            ViewBag.MonitorBeurtDepartement = new SelectList(DepartementLijst);
+            CampusLijst.AddRange(CampusQry.Distinct());
+            ViewBag.MonitorBeurtDepartement = new SelectList(CampusLijst);
 
             var MonitorBeurten = from m in db.MonitorBeurt
                          select m;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                MonitorBeurten = MonitorBeurten.Where(s => s.Campus.Contains(searchString));
+                MonitorBeurten = MonitorBeurten.Where(s => s.Campus.Name.Contains(searchString));
             }
             if (!string.IsNullOrEmpty(MonitorBeurtDepartement))
             {
-                 MonitorBeurten= MonitorBeurten.Where(x => x.Departement == MonitorBeurtDepartement);
+                 MonitorBeurten= MonitorBeurten.Where(x => x.Campus.Name == MonitorBeurtDepartement);
             }
             return View(MonitorBeurten);
             
@@ -63,8 +73,9 @@ namespace Examonitor.Controllers
         }
 
         // GET: /MonitorBeurt/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            ViewBag.CampusId = new SelectList(await db.Campus.ToListAsync(), "Id", "Name");
             return View();
         }
 
@@ -75,10 +86,12 @@ namespace Examonitor.Controllers
 		// Example: public ActionResult Update([Bind(Include="ExampleProperty1,ExampleProperty2")] Model model)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(MonitorBeurtModel monitorbeurtmodel)
+        public ActionResult Create(MonitorBeurtModel monitorbeurtmodel, int CampusId)
         {
             if (ModelState.IsValid)
             {
+                var CampusList = db.Campus.ToList().Where(campus => campus.Id == CampusId);
+                monitorbeurtmodel.Campus = CampusList.First();
                 db.MonitorBeurt.Add(monitorbeurtmodel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -88,8 +101,10 @@ namespace Examonitor.Controllers
         }
 
         // GET: /MonitorBeurt/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
+            ViewBag.CampusId = new SelectList(await db.Campus.ToListAsync(), "Id", "Name");
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -109,10 +124,12 @@ namespace Examonitor.Controllers
 		// Example: public ActionResult Update([Bind(Include="ExampleProperty1,ExampleProperty2")] Model model)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(MonitorBeurtModel monitorbeurtmodel)
+        public ActionResult Edit(MonitorBeurtModel monitorbeurtmodel, int CampusId)
         {
             if (ModelState.IsValid)
             {
+                var CampusList = db.Campus.ToList().Where(campus => campus.Id == CampusId);
+                monitorbeurtmodel.Campus = CampusList.First();
                 db.Entry(monitorbeurtmodel).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
