@@ -24,9 +24,13 @@ namespace Examonitor.Controllers
             manager = new UserManager<MyUser>(new UserStore<MyUser>(db));
         }
         // GET: /Reservatie/
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var reservatie = db.Reservatie.Include(r => r.Toezichtbeurt);
+            var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId()); 
+            var reservatie = from m in db.Reservatie
+                                 select m;
+            reservatie = reservatie.Where(x => x.UserName == currentUser.UserName);
+            
             return View(reservatie.ToList());
         }
         [Authorize]
@@ -39,6 +43,15 @@ namespace Examonitor.Controllers
             
             var currentUser =  await manager.FindByIdAsync(User.Identity.GetUserId()); 
             var Monitorbeurt = db.MonitorBeurt.Single(monitor => monitor.MonitorBeurtId == id);
+            
+            foreach(ReservatieModel rest in db.Reservatie)
+            {
+               if(rest.ToezichtbeurtId == (int)id && rest.UserName == currentUser.UserName) 
+               {
+                   return RedirectToAction("index");
+               }
+            }            
+            
             ReservatieModel res = new ReservatieModel();
             res.ToezichtbeurtId = (int)id;
             
@@ -58,18 +71,10 @@ namespace Examonitor.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ToezichtbeurtId = new SelectList(db.MonitorBeurt, "MonitorBeurtId", "Start", res.ToezichtbeurtId);
-            //return View(res);
-            return RedirectToAction("index");
+            ViewBag.ToezichtbeurtId = new SelectList(db.MonitorBeurt, "MonitorBeurtId", "Start", res.ToezichtbeurtId);            
+            return RedirectToAction("index");           
             
-            //return View();
-
         }
-
-            
-            
-        
-        
 
         // GET: /Reservatie/Details/5
         public ActionResult Details(int? id)
