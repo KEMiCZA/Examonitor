@@ -38,12 +38,6 @@
             @Html.DisplayNameFor(model => model.Gereserveerd)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AangemaaktOp)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Aangepast)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Digitaal)
         </th>
         <th>
@@ -73,16 +67,10 @@
             @Html.DisplayFor(modelItem => item.Gereserveerd)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AangemaaktOp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Aangepast)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Digitaal)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Campus)
+            @Html.DisplayFor(modelItem => item.Campus.Name)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.MonitorBeurtId }) |

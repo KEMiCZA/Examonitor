@@ -59,8 +59,6 @@ namespace Examonitor.Migrations
                     Duurtijd = "2:30",
                     Capaciteit = 2,
                     Gereserveerd = 0,
-                    AangemaaktOp = DateTime.Parse("2013/10/18"),
-                    Aangepast = DateTime.Parse("2013/10/18"),
                     Digitaal = true
 
                 },
@@ -72,8 +70,6 @@ namespace Examonitor.Migrations
                     Duurtijd = "2:30",
                     Capaciteit = 2,
                     Gereserveerd = 0,
-                    AangemaaktOp = DateTime.Parse("2013/10/18"),
-                    Aangepast = DateTime.Parse("2013/10/18"),
                     Digitaal = true
 
                 });
