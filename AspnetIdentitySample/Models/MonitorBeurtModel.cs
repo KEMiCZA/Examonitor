@@ -11,7 +11,7 @@ namespace Examonitor.Models
 
         
         [Key] public int MonitorBeurtId { get; set; }
-        [Display(Name = "Aangemaakt Op")]
+        [Display(Name = "Datum")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Datum { get; set; }
@@ -20,14 +20,6 @@ namespace Examonitor.Models
         public string Duurtijd { get; set; }
         public int Capaciteit { get; set; }
         public int Gereserveerd { get; set; }
-        [Display(Name = "Aangemaakt Op")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime AangemaaktOp { get; set; }
-        [Display(Name = "Aangepast Op")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime Aangepast { get; set; }
         public bool Digitaal { get; set; }      
         public virtual Campus Campus { get; set; }
     }
