@@ -11,6 +11,8 @@ namespace Examonitor.Models
 
         
         [Key] public int MonitorBeurtId { get; set; }
+        
+        public string ExamenNaam { get; set; }
         [Display(Name = "Datum")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

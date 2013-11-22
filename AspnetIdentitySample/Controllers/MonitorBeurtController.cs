@@ -44,6 +44,7 @@ namespace Examonitor.Controllers
             var MonitorBeurten = from m in db.MonitorBeurt
                          select m;
             ViewBag.DatumSortParm = String.IsNullOrEmpty(sortOrder) ? "Datum_desc" : "";
+            ViewBag.ExamenNaamSortParm = sortOrder == "ExamenNaam" ? "ExamenNaam_desc" : "ExamenNaam";
             ViewBag.CampusSortParm = sortOrder == "Campus" ? "Campus_desc" : "Campus";
             
             switch (sortOrder)
@@ -56,6 +57,12 @@ namespace Examonitor.Controllers
                     break;
                 case "Campus_desc":
                     MonitorBeurten = MonitorBeurten.OrderByDescending(s => s.Campus.Name);
+                    break;
+                case "ExamenNaam":
+                    MonitorBeurten = MonitorBeurten.OrderBy(s => s.ExamenNaam);
+                    break;
+                case "ExamenNaam_desc":
+                    MonitorBeurten = MonitorBeurten.OrderByDescending(s => s.ExamenNaam);
                     break;
                 default:
                     MonitorBeurten = MonitorBeurten.OrderBy(s => s.Datum);

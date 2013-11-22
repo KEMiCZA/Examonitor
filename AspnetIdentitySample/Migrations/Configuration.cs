@@ -50,29 +50,32 @@ namespace Examonitor.Migrations
             }
             base.Seed(context);
 
-             context.MonitorBeurt.AddOrUpdate(i => i.MonitorBeurtId,
-                new MonitorBeurtModel
-                {
-                    Datum = DateTime.Parse("2013/10/18"),
-                    Start = "8:30",
-                    Einde = "10:30",
-                    Duurtijd = "2:30",
-                    Capaciteit = 2,
-                    Gereserveerd = 0,
-                    Digitaal = true
+            context.MonitorBeurt.AddOrUpdate(i => i.MonitorBeurtId,
+               new MonitorBeurtModel
+               {
+                   Datum = DateTime.Parse("2013/10/18"),
+                   ExamenNaam = "Ontwikkelen in een bedrijfsomgeving",
+                   Start = "8:30",
+                   Einde = "10:30",
+                   Duurtijd = "2:30",
+                   Capaciteit = 2,
+                   Gereserveerd = 0,
+                   Campus = new Campus() { Id = 0, Name = "meistraat" },
+                   Digitaal = true
 
-                },
-                new MonitorBeurtModel
-                {
-                    Datum = DateTime.Parse("2013/10/18"),
-                    Start = "8:30",
-                    Einde = "10:30",
-                    Duurtijd = "2:30",
-                    Capaciteit = 2,
-                    Gereserveerd = 0,
-                    Digitaal = true
-
-                });
+               },
+               new MonitorBeurtModel
+               {
+                   Datum = DateTime.Parse("2013/10/18"),
+                   ExamenNaam = "Informatica-architectuur",
+                   Start = "8:30",
+                   Einde = "10:30",
+                   Duurtijd = "2:30",
+                   Capaciteit = 2,
+                   Campus = new Campus() { Id = 1, Name = "Bouwmesterstraat" },
+                   Gereserveerd = 0,
+                   
+               });
        
         }
     }

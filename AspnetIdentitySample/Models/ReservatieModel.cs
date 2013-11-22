@@ -13,7 +13,7 @@ namespace Examonitor.Models
         [Key]
         public int ReservatieId { get; set; }
         public int ToezichtbeurtId { get; set; }
-
+        
         public string UserName { get; set; }
 
         [Display(Name = "Aangemaakt op")]
