@@ -177,10 +177,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers.cs" />
-    <Compile Include="Migrations\201311142152438_initial.cs" />
-    <Compile Include="Migrations\201311142152438_initial.Designer.cs">
-      <DependentUpon>201311142152438_initial.cs</DependentUpon>
-    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -198,7 +195,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <None Include="Properties\PublishProfiles\SQLEXPRESS.pubxml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -271,6 +267,7 @@
     <Content Include="Views\Campus\Details.cshtml" />
     <Content Include="Views\Campus\Edit.cshtml" />
     <Content Include="Views\Campus\Index.cshtml" />
+    <Content Include="Views\Reservatie\All.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -278,7 +275,9 @@
     <Folder Include="fonts\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\RolesAdmin\Index.cshtml" />
@@ -309,11 +308,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UsersAdmin\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201311142152438_initial.resx">
-      <DependentUpon>201311142152438_initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

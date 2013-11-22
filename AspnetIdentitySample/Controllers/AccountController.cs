@@ -16,17 +16,16 @@ namespace Examonitor.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private MyDbContext db;
+        private UserManager<MyUser> UserManager;
+        private RoleManager<IdentityRole> RoleManager;
+
         public AccountController()
-            : this(new UserManager<MyUser>(new UserStore<MyUser>(new MyDbContext())))
         {
+            db = new MyDbContext();
+            UserManager = new UserManager<MyUser>(new UserStore<MyUser>(db));
+            RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
         }
-
-        public AccountController(UserManager<MyUser> userManager)
-        {
-            UserManager = userManager;
-        }
-
-        public UserManager<MyUser> UserManager { get; private set; }
 
         //
         // GET: /Account/Activate
@@ -226,6 +225,8 @@ namespace Examonitor.Controllers
                 var user = new MyUser() { UserName = model.UserName };
                 user.Email = model.Email;
                 var result = await UserManager.CreateAsync(user, model.Password);
+                UserManager.AddToRole(user.Id, "Docent");
+                
                 if (result.Succeeded)
                 {
                     var mailUser = UserManager.FindByName(model.UserName);

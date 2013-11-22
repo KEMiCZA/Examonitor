@@ -25,6 +25,7 @@ namespace Examonitor.Controllers
         }
         [Authorize]
         // GET: /Reservatie/
+        [Authorize]
         public async Task<ActionResult> Index()
         {
             var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId()); 
@@ -32,10 +33,16 @@ namespace Examonitor.Controllers
                                  select m;
             if (!User.IsInRole("Admin"))
             {
-                reservatie = reservatie.Where(x => x.UserName == currentUser.UserName);
+            reservatie = reservatie.Where(x => x.UserName == currentUser.UserName);
             }
             
             return View(reservatie.ToList());
+        }
+        // GET: /Reservatie/All
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> All()
+        {
+            return View(await db.Reservatie.ToListAsync());
         }
         [Authorize]
         public async Task<ActionResult> ReservatieToevoegen(int? id)
@@ -81,6 +88,7 @@ namespace Examonitor.Controllers
         }
 
         // GET: /Reservatie/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -96,6 +104,7 @@ namespace Examonitor.Controllers
         }
 
         // GET: /Reservatie/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.ToezichtbeurtId = new SelectList(db.MonitorBeurt, "MonitorBeurtId", "Start");
@@ -107,6 +116,7 @@ namespace Examonitor.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include="ReservatieId,ToezichtbeurtId,UserName,AangemaaktOp,AangepastOp")] ReservatieModel reservatiemodel)
         {
             if (ModelState.IsValid)
@@ -121,6 +131,7 @@ namespace Examonitor.Controllers
         }
 
         // GET: /Reservatie/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -141,6 +152,7 @@ namespace Examonitor.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include="ReservatieId,ToezichtbeurtId,UserName,AangemaaktOp,AangepastOp")] ReservatieModel reservatiemodel)
         {
             if (ModelState.IsValid)
@@ -154,7 +166,7 @@ namespace Examonitor.Controllers
         }
 
         // GET: /Reservatie/Delete/5
-        
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -173,6 +185,7 @@ namespace Examonitor.Controllers
         // POST: /Reservatie/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             ReservatieModel reservatiemodel = db.Reservatie.Find(id);
