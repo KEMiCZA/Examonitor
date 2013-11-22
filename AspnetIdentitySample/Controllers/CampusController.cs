@@ -10,6 +10,7 @@ using Examonitor.Models;
 
 namespace Examonitor.Views
 {
+    [Authorize(Roles = "Admin")]
     public class CampusController : Controller
     {
         private MyDbContext db = new MyDbContext();

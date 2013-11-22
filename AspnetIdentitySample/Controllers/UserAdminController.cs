@@ -177,58 +177,70 @@ namespace Examonitor.Controllers
             }
         }
 
-        ////
-        //// GET: /Users/Delete/5
-        //public async Task<ActionResult> Delete(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    var user = await context.Users.FindAsync(id);
-        //    if (user == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(user);
-        //}
+        //
+        // GET: /Users/Delete/5
+        public async Task<ActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = await UserManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
 
-        ////
-        //// POST: /Users/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> DeleteConfirmed(string id)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (id == null)
-        //        {
-        //            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //        }
+        //
+        // POST: /Users/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(string id)
+        {
+            if (ModelState.IsValid)
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
 
-        //        var user = await context.Users.FindAsync(id);
-        //        var logins = user.Logins;
-        //        foreach (var login in logins)
-        //        {
-        //            context.UserLogins.Remove(login);
-        //        }
-        //        var rolesForUser = await IdentityManager.Roles.GetRolesForUserAsync(id, CancellationToken.None);
-        //        if (rolesForUser.Count() > 0)
-        //        {
+                var user = UserManager.FindById(id);
 
-        //            foreach (var item in rolesForUser)
-        //            {
-        //                var result = await IdentityManager.Roles.RemoveUserFromRoleAsync(user.Id, item.Id, CancellationToken.None);
-        //            }
-        //        }
-        //        context.Users.Remove(user);
-        //        await context.SaveChangesAsync();
-        //        return RedirectToAction("Index");
-        //    }
-        //    else
-        //    {
-        //        return View();
-        //    }
-        //}
+                
+                var reservatie = from m in context.Reservatie
+                             select m;
+                reservatie = reservatie.Where(x => x.UserName == user.UserName);
+
+                foreach(var res in reservatie)
+                {
+                    context.Reservatie.Remove(res);
+                }
+
+            
+                var logins = UserManager.GetLogins(id);
+                foreach (var login in logins)
+                {
+                    UserManager.RemoveLogin(id, login);
+                }
+                var rolesForUser = UserManager.GetRoles(id);
+                if (rolesForUser.Count() > 0)
+                {
+
+                    foreach (var item in rolesForUser)
+                    {
+                        var result = await UserManager.RemoveFromRoleAsync(id, item);
+                    }
+                }
+                UserManager.Delete((MyUser)user);
+                await context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
+        }
     }
 }
