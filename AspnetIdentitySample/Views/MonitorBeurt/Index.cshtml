@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Examonitor.Models.MonitorBeurtModel>
+﻿@using Examonitor;
+@model IEnumerable<Examonitor.Models.MonitorBeurtModel>
+           
 
 @{
     ViewBag.Title = "Index";
@@ -7,12 +9,12 @@
 <h2>Monitor beurten</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create").If(User.IsInRole("Admin")) 
     @using (Html.BeginForm("Index", "MonitorBeurt", FormMethod.Get))
     {
     <p>
-        Departement: @Html.DropDownList("MonitorBeurtDepartement", "All")
-        Campus: @Html.TextBox("SearchString")
+        Campus: @Html.DropDownList("MonitorBeurtCampus", "All")
+        @*Campus: @Html.TextBox("SearchString")*@
         <input type="submit" value="Filter" />
     </p>
     }
@@ -20,7 +22,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Datum)
+            @Html.ActionLink("Datum", "Index", new { sortOrder = ViewBag.DatumSortParm }, new {  })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Start)
@@ -41,7 +43,7 @@
             @Html.DisplayNameFor(model => model.Digitaal)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Campus)
+            @Html.ActionLink("Campus", "Index", new { sortOrder = ViewBag.CampusSortParm })
         </th>
         <th></th>
     </tr>
@@ -73,9 +75,9 @@
             @Html.DisplayFor(modelItem => item.Campus.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MonitorBeurtId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MonitorBeurtId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MonitorBeurtId })
+            @Html.ActionLink("Edit", "Edit", new { id = item.MonitorBeurtId }).If(User.IsInRole("Admin")) 
+            @Html.ActionLink("Details", "Details", new { id = item.MonitorBeurtId }).If(User.IsInRole("Admin")) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.MonitorBeurtId }).If(User.IsInRole("Admin"))
             @Html.ActionLink("Reserveren", "ReservatieToevoegen", "Reservatie", new { id=item.MonitorBeurtId },"")
         </td>
     </tr>

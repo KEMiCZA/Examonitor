@@ -23,13 +23,17 @@ namespace Examonitor.Controllers
             db = new MyDbContext();
             manager = new UserManager<MyUser>(new UserStore<MyUser>(db));
         }
+        [Authorize]
         // GET: /Reservatie/
         public async Task<ActionResult> Index()
         {
             var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId()); 
             var reservatie = from m in db.Reservatie
                                  select m;
-            reservatie = reservatie.Where(x => x.UserName == currentUser.UserName);
+            if (!User.IsInRole("Admin"))
+            {
+                reservatie = reservatie.Where(x => x.UserName == currentUser.UserName);
+            }
             
             return View(reservatie.ToList());
         }
@@ -150,6 +154,7 @@ namespace Examonitor.Controllers
         }
 
         // GET: /Reservatie/Delete/5
+        
         public ActionResult Delete(int? id)
         {
             if (id == null)

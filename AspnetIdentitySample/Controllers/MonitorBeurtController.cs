@@ -18,6 +18,7 @@ namespace Examonitor.Controllers
         public UserManager<MyUser> UserManager { get; private set; }
         public RoleManager<IdentityRole> RoleManager { get; private set; }
         public MyDbContext db { get; private set; }
+        public string MonitorBeurtCampuss { get; set; }
 
         public MonitorBeurtController()
         {
@@ -25,29 +26,52 @@ namespace Examonitor.Controllers
             UserManager = new UserManager<MyUser>(new UserStore<MyUser>(db));
             RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
         }
-
+        [Authorize]
         // GET: /MonitorBeurt/
-        public ActionResult Index(string MonitorBeurtDepartement,string searchString)
+        public ActionResult Index(string MonitorBeurtCampus, string sortOrder)
         {
+            
             var CampusLijst = new List<string>();
 
             var CampusQry = from d in db.Campus
                                  select d.Name;
 
             CampusLijst.AddRange(CampusQry.Distinct());
-            ViewBag.MonitorBeurtDepartement = new SelectList(CampusLijst);
+           
+            ViewBag.MonitorBeurtCampus = new SelectList(CampusLijst);
+            
 
             var MonitorBeurten = from m in db.MonitorBeurt
                          select m;
+            ViewBag.DatumSortParm = String.IsNullOrEmpty(sortOrder) ? "Datum_desc" : "";
+            ViewBag.CampusSortParm = sortOrder == "Campus" ? "Campus_desc" : "Campus";
+            
+            switch (sortOrder)
+            {
+                case "Datum_desc":
+                    MonitorBeurten = MonitorBeurten.OrderByDescending(s => s.Datum);
+                    break;
+                case "Campus":
+                    MonitorBeurten = MonitorBeurten.OrderBy(s => s.Campus.Name);
+                    break;
+                case "Campus_desc":
+                    MonitorBeurten = MonitorBeurten.OrderByDescending(s => s.Campus.Name);
+                    break;
+                default:
+                    MonitorBeurten = MonitorBeurten.OrderBy(s => s.Datum);
+                    break;
+            }
 
-            if (!String.IsNullOrEmpty(searchString))
+
+            if (!string.IsNullOrEmpty(MonitorBeurtCampus))
             {
-                MonitorBeurten = MonitorBeurten.Where(s => s.Campus.Name.Contains(searchString));
+                MonitorBeurtCampuss = MonitorBeurtCampus;
             }
-            if (!string.IsNullOrEmpty(MonitorBeurtDepartement))
+            if (!string.IsNullOrEmpty(MonitorBeurtCampuss))
             {
-                 MonitorBeurten= MonitorBeurten.Where(x => x.Campus.Name == MonitorBeurtDepartement);
+                MonitorBeurten = MonitorBeurten.Where(x => x.Campus.Name == MonitorBeurtCampuss);
             }
+            
             return View(MonitorBeurten);
             
         }
@@ -73,6 +97,7 @@ namespace Examonitor.Controllers
         }
 
         // GET: /MonitorBeurt/Create
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create()
         {
             ViewBag.CampusId = new SelectList(await db.Campus.ToListAsync(), "Id", "Name");
