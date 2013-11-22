@@ -189,7 +189,7 @@ namespace Examonitor.Controllers
                 if (user != null && user.IsConfirmed == true)
                 {
                     await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "MonitorBeurt");
                 }
                 else if(user != null)
                 {
@@ -448,7 +448,7 @@ namespace Examonitor.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "MonitorBeurt");
         }
 
         //
