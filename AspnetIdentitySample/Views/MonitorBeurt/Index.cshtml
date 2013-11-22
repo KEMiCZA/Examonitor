@@ -13,8 +13,8 @@
     @using (Html.BeginForm("Index", "MonitorBeurt", FormMethod.Get))
     {
     <p>
-        Departement: @Html.DropDownList("MonitorBeurtDepartement", "All")
-        Campus: @Html.TextBox("SearchString")
+        Campus: @Html.DropDownList("MonitorBeurtCampus", "All")
+        @*Campus: @Html.TextBox("SearchString")*@
         <input type="submit" value="Filter" />
     </p>
     }
@@ -22,7 +22,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Datum)
+            @Html.ActionLink("Datum", "Index", new { sortOrder = ViewBag.DatumSortParm }, new {  })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Start)
@@ -43,7 +43,7 @@
             @Html.DisplayNameFor(model => model.Digitaal)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Campus)
+            @Html.ActionLink("Campus", "Index", new { sortOrder = ViewBag.CampusSortParm })
         </th>
         <th></th>
     </tr>

@@ -1,13 +1,14 @@
-﻿@model IEnumerable<Examonitor.Models.ReservatieModel>
+﻿@using Examonitor;
+@model IEnumerable<Examonitor.Models.ReservatieModel>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Reservaties</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create").If(User.IsInRole("Admin"))
 </p>
 <table class="table">
     <tr>
@@ -21,13 +22,22 @@
             @Html.DisplayNameFor(model => model.Toezichtbeurt.Einde)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserName)
+            @Html.DisplayNameFor(model => model.Toezichtbeurt.Duurtijd)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AangemaaktOp)
+            @Html.DisplayNameFor(model => model.Toezichtbeurt.Campus)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AangepastOp)
+            @Html.DisplayNameFor(model => model.Toezichtbeurt.Digitaal)
+        </th>
+        <th width="1%">
+            @Html.DisplayNameFor(model => model.UserName).If(User.IsInRole("Admin"))
+        </th>
+        <th width="1%">
+            @Html.DisplayNameFor(model => model.AangemaaktOp).If(User.IsInRole("Admin"))
+        </th>
+        <th width="1%">
+            @Html.DisplayNameFor(model => model.AangepastOp).If(User.IsInRole("Admin"))
         </th>
         <th></th>
     </tr>
@@ -44,18 +54,28 @@
             @Html.DisplayFor(modelItem => item.Toezichtbeurt.Einde)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UserName)
+            @Html.DisplayFor(modelItem => item.Toezichtbeurt.Duurtijd)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AangemaaktOp)
+            @Html.DisplayFor(modelItem => item.Toezichtbeurt.Campus.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AangepastOp)
+            @Html.DisplayFor(modelItem => item.Toezichtbeurt.Digitaal)
+        </td>
+        <td width="1%">
+            @Html.DisplayFor(modelItem => item.UserName).If(User.IsInRole("Admin"))
+        </td>
+        <td width="1%">
+            @Html.DisplayFor(modelItem => item.AangemaaktOp).If(User.IsInRole("Admin"))
+        </td>
+        <td width="1%">
+            @Html.DisplayFor(modelItem => item.AangepastOp).If(User.IsInRole("Admin"))
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ReservatieId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ReservatieId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ReservatieId })
+            @Html.ActionLink("Delete", "Delete", new { id = item.ReservatieId })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ReservatieId }).If(User.IsInRole("Admin"))        
+            @Html.ActionLink("Details", "Details", new { id = item.ReservatieId }).If(User.IsInRole("Admin"))        
+            
         </td>
     </tr>
 }
