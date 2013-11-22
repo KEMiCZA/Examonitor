@@ -22,7 +22,7 @@ namespace Examonitor.Migrations
 
             string name = "Admin";
             string password = "123456";
-            string test = "test";
+            string test = "Docent";
 
             //Create Role Test and User Test
             RoleManager.Create(new IdentityRole(test));
@@ -30,6 +30,8 @@ namespace Examonitor.Migrations
             user2.UserName = "User";
             user2.IsConfirmed = true;
             UserManager.Create(user2, "password");
+            user2 = UserManager.FindByName("User");
+            UserManager.AddToRole(user2.Id, test);
 
             //Create Role Admin if it does not exist
             if (!RoleManager.RoleExists(name))

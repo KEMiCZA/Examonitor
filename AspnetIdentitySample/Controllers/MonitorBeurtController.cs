@@ -37,7 +37,7 @@ namespace Examonitor.Controllers
                                  select d.Name;
 
             CampusLijst.AddRange(CampusQry.Distinct());
-           
+
             ViewBag.MonitorBeurtCampus = new SelectList(CampusLijst);
             
 
@@ -46,7 +46,7 @@ namespace Examonitor.Controllers
             ViewBag.DatumSortParm = String.IsNullOrEmpty(sortOrder) ? "Datum_desc" : "";
             ViewBag.ExamenNaamSortParm = sortOrder == "ExamenNaam" ? "ExamenNaam_desc" : "ExamenNaam";
             ViewBag.CampusSortParm = sortOrder == "Campus" ? "Campus_desc" : "Campus";
-            
+
             switch (sortOrder)
             {
                 case "Datum_desc":
@@ -118,6 +118,7 @@ namespace Examonitor.Controllers
 		// Example: public ActionResult Update([Bind(Include="ExampleProperty1,ExampleProperty2")] Model model)
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(MonitorBeurtModel monitorbeurtmodel, int CampusId)
         {
             if (ModelState.IsValid)
@@ -133,6 +134,7 @@ namespace Examonitor.Controllers
         }
 
         // GET: /MonitorBeurt/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(int? id)
         {
             ViewBag.CampusId = new SelectList(await db.Campus.ToListAsync(), "Id", "Name");
@@ -156,6 +158,7 @@ namespace Examonitor.Controllers
 		// Example: public ActionResult Update([Bind(Include="ExampleProperty1,ExampleProperty2")] Model model)
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(MonitorBeurtModel monitorbeurtmodel, int CampusId)
         {
             if (ModelState.IsValid)
@@ -170,6 +173,7 @@ namespace Examonitor.Controllers
         }
 
         // GET: /MonitorBeurt/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -187,9 +191,20 @@ namespace Examonitor.Controllers
         // POST: /MonitorBeurt/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             MonitorBeurtModel monitorbeurtmodel = db.MonitorBeurt.Find(id);
+
+            var reservatie = from m in db.Reservatie
+                             select m;
+            reservatie = reservatie.Where(x => x.ToezichtbeurtId == monitorbeurtmodel.MonitorBeurtId);
+
+            foreach (var res in reservatie)
+            {
+                db.Reservatie.Remove(res);
+            }
+
             db.MonitorBeurt.Remove(monitorbeurtmodel);
             db.SaveChanges();
             return RedirectToAction("Index");
