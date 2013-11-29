@@ -215,6 +215,17 @@ namespace Examonitor.Controllers
 
                 foreach(var res in reservatie)
                 {
+
+                    var Monitorbeurt = context.MonitorBeurt.Single(monitor => monitor.MonitorBeurtId == res.ToezichtbeurtId);
+
+                    if (Monitorbeurt.Gereserveerd > 0)
+                    {
+                        Monitorbeurt.Gereserveerd -= 1;
+                        context.Entry(Monitorbeurt).State = EntityState.Modified;
+
+                    }
+
+                    context.SaveChanges();
                     context.Reservatie.Remove(res);
                 }
 
