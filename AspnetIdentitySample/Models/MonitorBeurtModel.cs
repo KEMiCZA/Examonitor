@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -8,8 +9,6 @@ namespace Examonitor.Models
 {
     public class MonitorBeurtModel
     {
-
-        
         [Key] public int MonitorBeurtId { get; set; }
         [Display(Name = "Datum")]
         [DataType(DataType.Date)]
@@ -22,5 +21,13 @@ namespace Examonitor.Models
         public int Gereserveerd { get; set; }
         public bool Digitaal { get; set; }      
         public virtual Campus Campus { get; set; }
+
+        // Databinding, this will be set before going to the view to style the layout correctly
+        [NotMapped]
+        public bool ReservedByCurrentUser { get; set; }
+        [NotMapped]
+        public bool Available { get; set; }
+        [NotMapped]
+        public int CurrentRegistratieID { get; set; }
     }
 }

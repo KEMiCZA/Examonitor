@@ -20,6 +20,11 @@ namespace Examonitor.Controllers
         public MyDbContext db { get; private set; }
         public string MonitorBeurtCampuss { get; set; }
 
+        private class MonitorBeurt {
+            public MonitorBeurtModel monitorbeurt;
+            public bool flag = false; 
+        }
+
         public MonitorBeurtController()
         {
             db = new MyDbContext();
@@ -28,7 +33,7 @@ namespace Examonitor.Controllers
         }
         [Authorize]
         // GET: /MonitorBeurt/
-        public ActionResult Index(string MonitorBeurtCampus, string sortOrder)
+        public async Task<ActionResult> Index(string MonitorBeurtCampus, string sortOrder)
         {
             
             var CampusLijst = new List<string>();
@@ -37,9 +42,19 @@ namespace Examonitor.Controllers
                                  select d.Name;
 
             CampusLijst.AddRange(CampusQry.Distinct());
-           
+
             ViewBag.MonitorBeurtCampus = new SelectList(CampusLijst);
-            
+
+            var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            var reservatie = from m in db.Reservatie
+                             select m;
+            if (!User.IsInRole("Admin"))
+            {
+                reservatie = reservatie.Where(x => x.UserName == currentUser.UserName);
+            }
+
+            var reservatiesUser = reservatie.ToList();
+
 
             var MonitorBeurten = from m in db.MonitorBeurt
                          select m;
@@ -71,9 +86,22 @@ namespace Examonitor.Controllers
             {
                 MonitorBeurten = MonitorBeurten.Where(x => x.Campus.Name == MonitorBeurtCampuss);
             }
-            
+            foreach (var mb in MonitorBeurten)
+            {
+                mb.ReservedByCurrentUser = false;
+                mb.Available = true;
+                if (mb.Capaciteit == mb.Gereserveerd)
+                    mb.Available = false;
+                foreach (var rt in reservatiesUser)
+                {
+                    if (mb.MonitorBeurtId == rt.Toezichtbeurt.MonitorBeurtId)
+                    { 
+                        mb.ReservedByCurrentUser = true;
+                        mb.CurrentRegistratieID = rt.ReservatieId;
+                    }
+                }
+            }
             return View(MonitorBeurten);
-            
         }
 
         // GET: /MonitorBeurt/Details/5

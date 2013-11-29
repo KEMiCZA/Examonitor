@@ -65,13 +65,13 @@ namespace Examonitor.Controllers
 
             if (ModelState.IsValid)
             {
-                if(Monitorbeurt.Gereserveerd<Monitorbeurt.Capaciteit)
+                if(Monitorbeurt.Gereserveerd < Monitorbeurt.Capaciteit)
                 {
                     Monitorbeurt.Gereserveerd += 1;
                     db.Entry(Monitorbeurt).State = EntityState.Modified;
-                }                
-                db.Reservatie.Add(res);
-                db.SaveChanges();
+                    db.Reservatie.Add(res);
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
 

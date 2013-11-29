@@ -48,8 +48,16 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
+    @{var rowColor = "rgba(255,255,255,0.0);"; }
+@foreach (var item in Model)
+{
+    if (item.ReservedByCurrentUser) { rowColor = "rgba(0,255,0,0.5)"; }
+    else {
+        if (!item.Available) { rowColor = "rgba(255,0,0,0.5)"; }
+        else { rowColor = "rgba(255,255,255,0.0)"; }
+    }
+    
+    <tr style="background-color:@rowColor;">
         <td>
             @Html.DisplayFor(modelItem => item.Datum)
         </td>
@@ -78,7 +86,8 @@
             @Html.ActionLink("Edit", "Edit", new { id = item.MonitorBeurtId }).If(User.IsInRole("Admin")) 
             @Html.ActionLink("Details", "Details", new { id = item.MonitorBeurtId }).If(User.IsInRole("Admin")) 
             @Html.ActionLink("Delete", "Delete", new { id = item.MonitorBeurtId }).If(User.IsInRole("Admin"))
-            @Html.ActionLink("Reserveren", "ReservatieToevoegen", "Reservatie", new { id=item.MonitorBeurtId },"")
+            @Html.ActionLink("Reserveren", "ReservatieToevoegen", "Reservatie", new { id=item.MonitorBeurtId },"").If(!item.ReservedByCurrentUser && item.Available)
+            @Html.ActionLink("Uitschrijven", "Delete", "Reservatie", new { id = item.CurrentRegistratieID }, "").If(item.ReservedByCurrentUser)
         </td>
     </tr>
 }
