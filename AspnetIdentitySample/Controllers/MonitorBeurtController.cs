@@ -90,12 +90,17 @@ namespace Examonitor.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
+            var reservatie = from m in db.Reservatie
+                                 select m;
+            ReservatieModel res = new ReservatieModel();
             MonitorBeurtModel monitorbeurtmodel = db.MonitorBeurt.Find(id);
             if (monitorbeurtmodel == null)
             {
                 return HttpNotFound();
             }
-            return View(monitorbeurtmodel);
+            var tuple = new Tuple<MonitorBeurtModel,ReservatieModel,IEnumerable<ReservatieModel>>(monitorbeurtmodel, res,reservatie);
+            return View(tuple);
         }
         public ActionResult Reserveren(int? id)
         {

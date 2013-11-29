@@ -1,4 +1,6 @@
-﻿@model Examonitor.Models.MonitorBeurtModel
+﻿@using Examonitor.Models;
+@model Tuple<MonitorBeurtModel, ReservatieModel, IEnumerable<ReservatieModel>>
+
 
 @{
     ViewBag.Title = "Details";
@@ -10,72 +12,96 @@
     <legend>MonitorBeurtModel</legend>
     <dl>
         <dt>
-            @Html.DisplayNameFor(model => model.Datum)
+            @Html.DisplayNameFor(model => model.Item1.ExamenNaam)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Item1.ExamenNaam)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.Datum)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Datum)
+            @Html.DisplayFor(model => model.Item1.Datum)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Start)
+            @Html.DisplayNameFor(model => model.Item1.Start)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Start)
+            @Html.DisplayFor(model => model.Item1.Start)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Einde)
+            @Html.DisplayNameFor(model => model.Item1.Einde)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Einde)
+            @Html.DisplayFor(model => model.Item1.Einde)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Duurtijd)
+            @Html.DisplayNameFor(model => model.Item1.Duurtijd)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Duurtijd)
+            @Html.DisplayFor(model => model.Item1.Duurtijd)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Capaciteit)
+            @Html.DisplayNameFor(model => model.Item1.Capaciteit)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Capaciteit)
+            @Html.DisplayFor(model => model.Item1.Capaciteit)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Gereserveerd)
+            @Html.DisplayNameFor(model => model.Item1.Gereserveerd)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Gereserveerd)
+            @Html.DisplayFor(model => model.Item1.Gereserveerd)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Digitaal)
+            @Html.DisplayNameFor(model => model.Item1.Digitaal)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Digitaal)
+            @Html.DisplayFor(model => model.Item1.Digitaal)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Campus)
+            @Html.DisplayNameFor(model => model.Item1.Campus)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Campus.Name)
+            @Html.DisplayFor(model => model.Item1.Campus.Name)
         </dd>
 
     </dl>
 </fieldset>
+@if (Request.IsAuthenticated && HttpContext.Current.User.IsInRole("Admin"))
+{<table class="table">
+        <tr>
+            <th width="1%">
+                @Html.DisplayNameFor(model => model.Item2.UserName)
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Item3)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+            </tr>
+        }
+    </table>
+}
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.MonitorBeurtId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.MonitorBeurtId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

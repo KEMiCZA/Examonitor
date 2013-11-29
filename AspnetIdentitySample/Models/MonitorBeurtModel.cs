@@ -11,7 +11,7 @@ namespace Examonitor.Models
 
         
         [Key] public int MonitorBeurtId { get; set; }
-        
+        [Display(Name = "Examen")]
         public string ExamenNaam { get; set; }
         [Display(Name = "Datum")]
         [DataType(DataType.Date)]

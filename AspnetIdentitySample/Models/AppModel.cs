@@ -18,6 +18,7 @@ namespace Examonitor.Models
     public class Campus
     {
         public int Id { get; set; }
+        [Display(Name = "Campus Naam")]
         public string Name { get; set; }
     }
 

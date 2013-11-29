@@ -23,7 +23,7 @@ namespace Examonitor.Controllers
             db = new MyDbContext();
             manager = new UserManager<MyUser>(new UserStore<MyUser>(db));
         }
-        [Authorize]
+        
         // GET: /Reservatie/
         [Authorize]
         public async Task<ActionResult> Index()
@@ -39,11 +39,11 @@ namespace Examonitor.Controllers
             return View(reservatie.ToList());
         }
         // GET: /Reservatie/All
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> All()
-        {
-            return View(await db.Reservatie.ToListAsync());
-        }
+        //[Authorize(Roles = "Admin")]
+        //public async Task<ActionResult> All()
+        //{
+        //    return View(await db.Reservatie.ToListAsync());
+        //}
         [Authorize]
         public async Task<ActionResult> ReservatieToevoegen(int? id)
         {
@@ -126,7 +126,7 @@ namespace Examonitor.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ToezichtbeurtId = new SelectList(db.MonitorBeurt, "MonitorBeurtId", "Start", reservatiemodel.ToezichtbeurtId);
+            ViewBag.ExamenNaam = new SelectList(db.MonitorBeurt, "ExamenNaam", "Examen", reservatiemodel.Toezichtbeurt.ExamenNaam);
             return View(reservatiemodel);
         }
 

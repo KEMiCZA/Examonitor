@@ -51,6 +51,17 @@ namespace Examonitor.Migrations
                 var result = UserManager.AddToRole(user.Id, name);
             }
             base.Seed(context);
+            context.Campus.AddOrUpdate(i => i.Id,
+                new Campus
+                {
+                    Id = 1,
+                    Name = "Meistraat2"
+                },
+                new Campus
+                {
+                    Id = 2,
+                    Name = "bouw"
+                });
 
             context.MonitorBeurt.AddOrUpdate(i => i.MonitorBeurtId,
                new MonitorBeurtModel
@@ -62,7 +73,7 @@ namespace Examonitor.Migrations
                    Duurtijd = "2:30",
                    Capaciteit = 2,
                    Gereserveerd = 0,
-                   Campus = new Campus() { Id = 0, Name = "meistraat" },
+                   Campus = context.Campus.Find(1),
                    Digitaal = true
 
                },
@@ -74,7 +85,7 @@ namespace Examonitor.Migrations
                    Einde = "10:30",
                    Duurtijd = "2:30",
                    Capaciteit = 2,
-                   Campus = new Campus() { Id = 1, Name = "Bouwmesterstraat" },
+                   Campus = context.Campus.Find(2),
                    Gereserveerd = 0,
                    
                });
