@@ -115,6 +115,7 @@ namespace Examonitor.Controllers
             }
             
             var reservatie = from m in db.Reservatie
+                             where m.ToezichtbeurtId == id
                                  select m;
             ReservatieModel res = new ReservatieModel();
             MonitorBeurtModel monitorbeurtmodel = db.MonitorBeurt.Find(id);
