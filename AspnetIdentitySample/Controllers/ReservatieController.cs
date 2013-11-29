@@ -192,8 +192,10 @@ namespace Examonitor.Controllers
 
         // GET: /Reservatie/Delete/5
         [Authorize]
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
+            var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId());
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -202,6 +204,10 @@ namespace Examonitor.Controllers
             if (reservatiemodel == null)
             {
                 return HttpNotFound();
+            }
+            else if(!reservatiemodel.UserName.Equals(currentUser.UserName) && !User.IsInRole("Admin"))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
 
             return View(reservatiemodel);

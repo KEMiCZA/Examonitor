@@ -1,0 +1,21 @@
+﻿@model Examonitor.Models.MonitorBeurtModel
+
+@{
+    ViewBag.Title = "Delete All";
+}
+
+<h2>Delete All</h2>
+
+<h3>Are you sure you want to delete EVERYTHING?</h3>
+<p>Enter <i>deleteall</i> in capital letters below to confirm action.</p>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="form-actions no-color">
+        <input type="text" placeholder="Enter confirmation" name="confirmation" />
+        <input type="submit" value="Delete" class="btn" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}

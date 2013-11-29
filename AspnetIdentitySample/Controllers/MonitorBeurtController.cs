@@ -239,6 +239,50 @@ namespace Examonitor.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: /MonitorBeurt/Delete/5
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteAll()
+        {
+            return View();
+        }
+
+        // POST: /MonitorBeurt/Delete/5
+        [HttpPost, ActionName("DeleteAll")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteAllConfirmed(FormCollection formCollection)
+        {
+            var confirmation = formCollection["confirmation"];
+
+            if (!string.IsNullOrEmpty(confirmation) && confirmation.Equals("DELETEALL"))
+            {
+                var reservatie = from m in db.Reservatie
+                                 select m;
+
+                foreach (var res in reservatie)
+                {
+                    db.Reservatie.Remove(res);
+                }
+
+                var monitorbeurt = from m in db.MonitorBeurt
+                                   select m;
+
+                foreach (var mon in monitorbeurt)
+                {
+                    db.MonitorBeurt.Remove(mon);
+                }
+
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid confirmation code.");
+            }
+
+            return View("DeleteAll");
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

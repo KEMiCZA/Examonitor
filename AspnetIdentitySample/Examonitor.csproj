@@ -271,6 +271,7 @@
     <Content Include="Views\Campus\Edit.cshtml" />
     <Content Include="Views\Campus\Index.cshtml" />
     <Content Include="Views\Reservatie\All.cshtml" />
+    <Content Include="Views\MonitorBeurt\DeleteAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

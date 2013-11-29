@@ -9,7 +9,13 @@
 <h2>Monitor beurten</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create").If(User.IsInRole("Admin")) 
+    @if (Request.IsAuthenticated && HttpContext.Current.User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Create New", "Create")
+        <span>|</span>
+        @Html.ActionLink("Delete All", "DeleteAll")
+    }
+ 
     @using (Html.BeginForm("Index", "MonitorBeurt", FormMethod.Get))
     {
     <p>
