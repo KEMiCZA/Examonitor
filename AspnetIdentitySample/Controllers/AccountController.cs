@@ -16,17 +16,18 @@ namespace Examonitor.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private MyDbContext db;
+        private UserManager<MyUser> UserManager;
+        private RoleManager<IdentityRole> RoleManager;
+
         public AccountController()
-            : this(new UserManager<MyUser>(new UserStore<MyUser>(new MyDbContext())))
         {
-        }
+            db = new MyDbContext();
+            UserManager = new UserManager<MyUser>(new UserStore<MyUser>(db));
+            RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 
-        public AccountController(UserManager<MyUser> userManager)
-        {
-            UserManager = userManager;
+            UserManager.UserValidator = new UserValidator<MyUser>(UserManager) { AllowOnlyAlphanumericUserNames = false };
         }
-
-        public UserManager<MyUser> UserManager { get; private set; }
 
         //
         // GET: /Account/Activate
@@ -190,7 +191,7 @@ namespace Examonitor.Controllers
                 if (user != null && user.IsConfirmed == true)
                 {
                     await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "MonitorBeurt");
                 }
                 else if(user != null)
                 {
@@ -221,29 +222,46 @@ namespace Examonitor.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            string mail;
+            string splitmail;
+
             if (ModelState.IsValid)
             {
-                var user = new MyUser() { UserName = model.UserName };
-                user.Email = model.Email;
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                ValidateModel(model);
+                mail = model.Email;
+                splitmail = mail.Split('@')[1];
+
+                if(splitmail.Equals("ap.be"))
                 {
-                    var mailUser = UserManager.FindByName(model.UserName);
+                    var user = new MyUser() { UserName = model.UserName };
+                    user.Email = mail;
+                    var result = await UserManager.CreateAsync(user, model.Password);
 
-                    dynamic email = new Email("Activate");
-                    email.To = mailUser.Email;
-                    email.UserName = mailUser.UserName;
-                    email.UserId = mailUser.Id;
-                    email.ConfirmationToken = UserManager.GetConfirmationToken(mailUser.Id);
-                    email.Send();
+                    if (result.Succeeded)
+                    {
 
-                    //Don't log in, activate account first
-                    //await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Activate");
+                        UserManager.AddToRole(user.Id, "Docent");
+                        var mailUser = UserManager.FindByName(model.UserName);
+
+                        dynamic email = new Email("Activate");
+                        email.To = mailUser.Email;
+                        email.UserName = mailUser.UserName;
+                        email.UserId = mailUser.Id;
+                        email.ConfirmationToken = UserManager.GetConfirmationToken(mailUser.Id);
+                        email.Send();
+
+                        //Don't log in, activate account first
+                        //await SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("Activate");
+                    }
+                    else
+                    {
+                        AddErrors(result);
+                    }
                 }
                 else
                 {
-                    AddErrors(result);
+                    ModelState.AddModelError("", "E-mail is not valid");
                 }
             }
 
@@ -447,7 +465,7 @@ namespace Examonitor.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "MonitorBeurt");
         }
 
         //

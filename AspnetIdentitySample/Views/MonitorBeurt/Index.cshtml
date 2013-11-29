@@ -3,7 +3,7 @@
            
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Monitor Beurten";
 }
 
 <h2>Monitor beurten</h2>
@@ -21,6 +21,10 @@
 </p>
 <table class="table">
     <tr>
+        <th>
+            
+            @Html.ActionLink("Examen", "Index", new { sortOrder = ViewBag.ExamenNaamSortParm }, new { })
+        </th>
         <th>
             @Html.ActionLink("Datum", "Index", new { sortOrder = ViewBag.DatumSortParm }, new {  })
         </th>
@@ -58,6 +62,9 @@
     }
     
     <tr style="background-color:@rowColor;">
+        <td>
+            @Html.DisplayFor(modelItem => item.ExamenNaam)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Datum)
         </td>

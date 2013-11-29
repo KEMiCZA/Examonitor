@@ -11,6 +11,8 @@ namespace Examonitor.Models
 {
     public class MyUser : IdentityUser
     {
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
         public virtual ICollection<ToDo> ToDoes { get; set; }
     }
@@ -18,6 +20,7 @@ namespace Examonitor.Models
     public class Campus
     {
         public int Id { get; set; }
+        [Display(Name = "Campus Naam")]
         public string Name { get; set; }
     }
 

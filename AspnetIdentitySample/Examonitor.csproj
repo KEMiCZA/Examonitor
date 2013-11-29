@@ -198,7 +198,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <None Include="Properties\PublishProfiles\SQLEXPRESS.pubxml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -271,6 +270,7 @@
     <Content Include="Views\Campus\Details.cshtml" />
     <Content Include="Views\Campus\Edit.cshtml" />
     <Content Include="Views\Campus\Index.cshtml" />
+    <Content Include="Views\Reservatie\All.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -278,7 +278,9 @@
     <Folder Include="fonts\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\RolesAdmin\Index.cshtml" />
