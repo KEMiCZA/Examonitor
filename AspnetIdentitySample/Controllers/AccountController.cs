@@ -25,6 +25,8 @@ namespace Examonitor.Controllers
             db = new MyDbContext();
             UserManager = new UserManager<MyUser>(new UserStore<MyUser>(db));
             RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+
+            UserManager.UserValidator = new UserValidator<MyUser>(UserManager) { AllowOnlyAlphanumericUserNames = false };
         }
 
         //
@@ -220,31 +222,46 @@ namespace Examonitor.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            string mail;
+            string splitmail;
+
             if (ModelState.IsValid)
             {
-                var user = new MyUser() { UserName = model.UserName };
-                user.Email = model.Email;
-                var result = await UserManager.CreateAsync(user, model.Password);
-                UserManager.AddToRole(user.Id, "Docent");
-                
-                if (result.Succeeded)
+                ValidateModel(model);
+                mail = model.Email;
+                splitmail = mail.Split('@')[1];
+
+                if(splitmail.Equals("ap.be"))
                 {
-                    var mailUser = UserManager.FindByName(model.UserName);
+                    var user = new MyUser() { UserName = model.UserName };
+                    user.Email = mail;
+                    var result = await UserManager.CreateAsync(user, model.Password);
 
-                    dynamic email = new Email("Activate");
-                    email.To = mailUser.Email;
-                    email.UserName = mailUser.UserName;
-                    email.UserId = mailUser.Id;
-                    email.ConfirmationToken = UserManager.GetConfirmationToken(mailUser.Id);
-                    email.Send();
+                    if (result.Succeeded)
+                    {
 
-                    //Don't log in, activate account first
-                    //await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Activate");
+                        UserManager.AddToRole(user.Id, "Docent");
+                        var mailUser = UserManager.FindByName(model.UserName);
+
+                        dynamic email = new Email("Activate");
+                        email.To = mailUser.Email;
+                        email.UserName = mailUser.UserName;
+                        email.UserId = mailUser.Id;
+                        email.ConfirmationToken = UserManager.GetConfirmationToken(mailUser.Id);
+                        email.Send();
+
+                        //Don't log in, activate account first
+                        //await SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("Activate");
+                    }
+                    else
+                    {
+                        AddErrors(result);
+                    }
                 }
                 else
                 {
-                    AddErrors(result);
+                    ModelState.AddModelError("", "E-mail is not valid");
                 }
             }
 

@@ -11,6 +11,8 @@ namespace Examonitor.Models
 {
     public class MyUser : IdentityUser
     {
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
         public virtual ICollection<ToDo> ToDoes { get; set; }
     }
