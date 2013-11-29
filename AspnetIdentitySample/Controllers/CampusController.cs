@@ -114,6 +114,16 @@ namespace Examonitor.Views
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var monitor = from m in db.MonitorBeurt
+                          select m;
+            foreach(var mon in monitor)
+            {
+                if(mon.Campus.Id == id)
+                {
+                    db.MonitorBeurt.Remove(mon);
+                }
+
+            }
             Campus campus = db.Campus.Find(id);
             db.Campus.Remove(campus);
             db.SaveChanges();

@@ -35,7 +35,7 @@ namespace Examonitor.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Email")]
         public string UserName { get; set; }
 
         [Required]
@@ -50,12 +50,16 @@ namespace Examonitor.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Email")]
+        [EmailAddress]
+        [DataType(DataType.EmailAddress)]
         public string UserName { get; set; }
 
         [Required]
-        [Display(Name = "Email Address")]
+        [Display(Name = "Confirm email")]
+        [EmailAddress]
         [DataType(DataType.EmailAddress)]
+        [Compare("Email", ErrorMessage = "The email and email confirmation does not match.")]
         public string Email { get; set; }
 
         [Required]

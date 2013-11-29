@@ -17,6 +17,13 @@
         @Html.HiddenFor(model => model.MonitorBeurtId)
 
         <div class="form-group">
+            @Html.LabelFor(model => model.ExamenNaam, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ExamenNaam)
+                @Html.ValidationMessageFor(model => model.ExamenNaam, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="form-group">
             @Html.LabelFor(model => model.Datum, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Datum)
