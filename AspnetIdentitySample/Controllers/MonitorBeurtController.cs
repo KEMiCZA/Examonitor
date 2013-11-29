@@ -90,9 +90,11 @@ namespace Examonitor.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
+
             var reservatie = from m in db.Reservatie
-                                 select m;
+                             where m.ToezichtbeurtId == id
+                             select m;
+                                 
             ReservatieModel res = new ReservatieModel();
             MonitorBeurtModel monitorbeurtmodel = db.MonitorBeurt.Find(id);
             if (monitorbeurtmodel == null)
