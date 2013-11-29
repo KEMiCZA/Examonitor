@@ -132,6 +132,14 @@ namespace Examonitor.Controllers
             return View();
         }
 
+        // GET: /MonitorBeurt/Create
+        [Authorize(Roles = "Admin")]
+        public ActionResult Export()
+        {
+
+            return File(new System.Text.UTF8Encoding().GetBytes((char[])null), "text/csv", "export.cvs");
+        }
+
         // POST: /MonitorBeurt/Create
 		// To protect from over posting attacks, please enable the specific properties you want to bind to, for 
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
