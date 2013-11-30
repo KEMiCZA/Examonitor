@@ -135,6 +135,7 @@ namespace Examonitor.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create()
         {
+
             ViewBag.CampusId = new SelectList(await db.Campus.ToListAsync(), "Id", "Name");
             return View();
         }

@@ -4,12 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Examonitor.Models
 {
     public class MonitorBeurtModel
     {
-        [Key] public int MonitorBeurtId { get; set; }
+        [Key] 
+        public int MonitorBeurtId { get; set; }
         [Display(Name = "Examen Naam")]
         public string ExamenNaam { get; set; }
         [Display(Name = "Begin Datum")]

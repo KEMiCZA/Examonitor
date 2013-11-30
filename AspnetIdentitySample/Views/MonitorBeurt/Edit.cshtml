@@ -11,86 +11,43 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset class="form-horizontal">
-        <legend>MonitorBeurtModel</legend>
+     <form class="form-horizontal" role="form">
 
-        @Html.HiddenFor(model => model.MonitorBeurtId)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ExamenNaam, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-sm-10">
                 @Html.EditorFor(model => model.ExamenNaam)
-                @Html.ValidationMessageFor(model => model.ExamenNaam, null, new { @class = "help-inline" })
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Datum, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Datum)
-                @Html.ValidationMessageFor(model => model.Datum, null, new { @class = "help-inline" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Start, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Start)
-                @Html.ValidationMessageFor(model => model.Start, null, new { @class = "help-inline" })
+            <div class="col-sm-10">
+                @Html.EditorFor(model => model.BeginDatum)
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Einde, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Einde)
-                @Html.ValidationMessageFor(model => model.Einde, null, new { @class = "help-inline" })
+            <div class="col-sm-10">
+                @Html.EditorFor(model => model.EindDatum)
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Duurtijd, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Duurtijd)
-                @Html.ValidationMessageFor(model => model.Duurtijd, null, new { @class = "help-inline" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Capaciteit, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-sm-10">
                 @Html.EditorFor(model => model.Capaciteit)
-                @Html.ValidationMessageFor(model => model.Capaciteit, null, new { @class = "help-inline" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Gereserveerd, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Gereserveerd)
-                @Html.ValidationMessageFor(model => model.Gereserveerd, null, new { @class = "help-inline" })
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Digitaal, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-sm-10">
                 @Html.EditorFor(model => model.Digitaal)
-                @Html.ValidationMessageFor(model => model.Digitaal, null, new { @class = "help-inline" })
+            </div>
+
+        <div class="col-sm-10">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Campus, new { @class = "col-sm-2 control-label" })
+                @Html.DropDownList("CampusId", ViewBag.CampusId as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Campus, null, new { @class = "help-block" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Campus.Name, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("CampusId")
-                    </div>
-                </div>
-        
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Save" class="btn" />
+        <div class="btn-group">
+            <input type="submit" value="Opslaan" class="btn btn-success btn-default" />
+            <input type="BUTTON" value="Annuleren" class="btn btn-danger btn-default" onclick="window.location.href = '@Url.Action("Index")'" />
         </div>
-    </fieldset>
+
+</form>
 }
 
 <div>
@@ -99,5 +56,15 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(function () {
+            $('#BeginDatum').datetimepicker();
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('#EindDatum').datetimepicker();
+        });
+    </script>
 }
 

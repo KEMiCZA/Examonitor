@@ -24,7 +24,6 @@ namespace Examonitor
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Database.SetInitializer<MyDbContext>(new MyDbInitializer());
-            BootstrapEditorTemplatesConfig.RegisterBundles();
         }
     }
 
