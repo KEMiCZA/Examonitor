@@ -36,5 +36,7 @@ namespace Examonitor.Models
         public int CurrentRegistratieID { get; set; }
         [NotMapped]
         public string Duurtijd { get; set; }
+        
+ 
     }
 }

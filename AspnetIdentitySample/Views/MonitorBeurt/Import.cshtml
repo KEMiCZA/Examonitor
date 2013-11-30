@@ -1,0 +1,32 @@
+﻿@model Examonitor.Models.MonitorBeurtModel
+
+@{
+    ViewBag.Title = "Monitorbeurten importeren";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>Een .txt bestand waarin per regel een monitorbeurt staat.</p>
+<p>Syntax: <i class="red">Naam;BeginDatum;EindDatum;Capaciteit;Digitaal;Campus</i></p>
+<p>Voorbeeld van een regel: <b>Ontwikkelen in een bedrijfsomgeving;2013/10/18 08:00 AM;2013/10/18 12:00 PM;5;y;Meistraat</b></p>
+<p>Indien de campus niet bestaat zal deze aangemaakt worden.</p>
+<p>TODO: testen schrijven (Exception handling) en de input van DateTime aanpassen zodat het nakkelijker is te exporteren/importeren</p>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="form-horizontal col-sm-4">
+        <div class="form-group">
+            <input type="file" id="file" name="file" class="btn btn-success btn-sm" />
+        </div>
+    </div>
+        <div class="form-group">
+            <input type="submit" value="Importeren" class="btn btn-success btn-default" />
+        </div>
+   
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

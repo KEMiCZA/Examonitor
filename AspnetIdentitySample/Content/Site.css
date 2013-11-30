@@ -42,11 +42,11 @@ input[type="checkbox"].input-validation-error {
 }
 
 .red {
-    color: rgba(255,0,0,1.0);
+    color: rgba(255,90,0,1.0);
 }
 
 .red:hover{
-    color: rgba(255,0,0,0.5);
+    color: rgba(255,90,0,0.5);
 }
 
 .green {
@@ -55,4 +55,12 @@ input[type="checkbox"].input-validation-error {
 
 .green:hover {
     color: rgba(0,255,0,0.5);
+}
+
+.black {
+    color: rgba(0,0,0,1.0);
+}
+
+.black:hover {
+    color: rgba(0,0,0,0.5);
 }

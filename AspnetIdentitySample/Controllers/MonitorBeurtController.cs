@@ -12,6 +12,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Threading.Tasks;
 using System.Data.Entity.Core;
 using System.Data.Entity.Core.Objects;
+using System.IO;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace Examonitor.Controllers
 {
@@ -28,6 +31,7 @@ namespace Examonitor.Controllers
             UserManager = new UserManager<MyUser>(new UserStore<MyUser>(db));
             RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
         }
+
         [Authorize]
         // GET: /MonitorBeurt/
         public async Task<ActionResult> Index(string MonitorBeurtCampus, string sortOrder)
@@ -39,7 +43,6 @@ namespace Examonitor.Controllers
                                  select d.Name;
 
             CampusLijst.AddRange(CampusQry.Distinct());
-           
             ViewBag.MonitorBeurtCampus = new SelectList(CampusLijst);
             
             var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -109,6 +112,94 @@ namespace Examonitor.Controllers
             return View(MonitorBeurten);
         }
 
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> Import()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Import(HttpPostedFileBase file)
+        {
+            List<MonitorBeurtModel> monitorbeurten = new List<MonitorBeurtModel>();
+            Campus campus = null;
+            IQueryable<Campus> campusQuery = null;
+            if (ModelState.IsValid)
+            {
+                if (file.ContentLength > 0)
+                {
+                    StreamReader reader = new StreamReader(file.InputStream);
+                    string line = reader.ReadLine();
+                    while (line != null)
+                    {
+                        string[] input = line.Split(';');
+                        if(input.Length == 6)
+                        {
+                            String examenNaam = input[0];
+                            DateTime beginDatum = DateTime.Parse(input[1]);
+                            DateTime eindDatum = DateTime.Parse(input[2]);
+                            int capaciteit = Convert.ToInt32(input[3]);
+                            bool digitaal = input[4].Equals("y");
+                            String campusNaam = input[5];
+                            campusQuery = db.Campus.Where(n => n.Name.Equals(campusNaam));
+                            if (campusQuery.Count().Equals(0)) // Campus does not exist, create it :)
+                            {
+                                campus = new Campus { Name = input[5] };
+                                db.Campus.Add(campus);
+                            }
+                            else {
+                                foreach(var x in campusQuery)
+                                    campus = x;
+                            }
+
+                            monitorbeurten.Add(new MonitorBeurtModel
+                            {
+                                ExamenNaam = examenNaam,
+                                BeginDatum = beginDatum,
+                                EindDatum = eindDatum,
+                                Capaciteit = capaciteit,
+                                Digitaal = digitaal,
+                                Campus = campus,
+                                Gereserveerd = 0,
+                            });
+                        }
+                        line = reader.ReadLine();
+                    }
+                    reader.Close();
+                    foreach (MonitorBeurtModel monitorbeurt in monitorbeurten)
+                    {
+                        if (db.MonitorBeurt.Where(n => n.ExamenNaam.Equals(monitorbeurt.ExamenNaam)).Count().Equals(0))
+                        {
+                            db.MonitorBeurt.Add(monitorbeurt);
+                        }
+                    }
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (DbEntityValidationException e)
+                    {
+                        foreach (var eve in e.EntityValidationErrors)
+                        {
+                            Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                            foreach (var ve in eve.ValidationErrors)
+                            {
+                                Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                    ve.PropertyName, ve.ErrorMessage);
+                            }
+                        }
+                        throw;
+                    }
+                    
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
         // GET: /MonitorBeurt/Details/5
         public ActionResult Details(int? id)
         {
@@ -128,17 +219,16 @@ namespace Examonitor.Controllers
             var tuple = new Tuple<MonitorBeurtModel,ReservatieModel,IEnumerable<ReservatieModel>>(monitorbeurtmodel, res,reservatie);
             return View(tuple);
         }
+
         public ActionResult Reserveren(int? id)
         {
             return View();
-
         }
 
         // GET: /MonitorBeurt/Create
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create()
         {
-
             ViewBag.CampusId = new SelectList(await db.Campus.ToListAsync(), "Id", "Name");
             return View();
         }
