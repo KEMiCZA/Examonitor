@@ -1,14 +1,12 @@
 ﻿@model IEnumerable<Examonitor.Models.MyUser>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Gebruikers Aanpassen";
 }
 
-<h2>Index</h2>
+<h2>Gebruikers Configuratie</h2>
+    @Html.ActionLink("Nieuwe Gebruiker Aanmaken", "Create")
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>

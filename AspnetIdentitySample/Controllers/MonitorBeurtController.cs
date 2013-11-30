@@ -10,6 +10,8 @@ using Examonitor.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Threading.Tasks;
+using System.Data.Entity.Core;
+using System.Data.Entity.Core.Objects;
 
 namespace Examonitor.Controllers
 {
@@ -94,6 +96,7 @@ namespace Examonitor.Controllers
                 mb.Available = true;
                 if (mb.Capaciteit == mb.Gereserveerd)
                     mb.Available = false;
+                mb.Duurtijd = mb.EindDatum.Subtract(mb.BeginDatum).ToString();
                 foreach (var rt in reservatiesUser)
                 {
                     if (mb.MonitorBeurtId == rt.Toezichtbeurt.MonitorBeurtId)
@@ -194,6 +197,7 @@ namespace Examonitor.Controllers
             {
                 var CampusList = db.Campus.ToList().Where(campus => campus.Id == CampusId);
                 monitorbeurtmodel.Campus = CampusList.First();
+                monitorbeurtmodel.Duurtijd = "50";
                 db.Entry(monitorbeurtmodel).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -1,6 +1,6 @@
 @model Examonitor.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Nieuwe Account Registreren";
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -8,7 +8,7 @@
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
+    <h4>Maak een nieuwe account aan.</h4>
     <hr />
     @Html.ValidationSummary()
     <div class="form-group">
@@ -38,7 +38,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
+            <input type="submit" value="Registreren" class="btn btn-success btn-default" />
         </div>
     </div>
 }

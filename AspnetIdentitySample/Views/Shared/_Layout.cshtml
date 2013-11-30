@@ -23,16 +23,16 @@
                 <ul class="nav navbar-nav">
                     @if (Request.IsAuthenticated && HttpContext.Current.User.IsInRole("Docent"))
                     {
-                        <li>@Html.ActionLink("Monitorbeurten", "Index", "MonitorBeurt")</li>
+                    <li>@Html.ActionLink("Monitorbeurten", "Index", "MonitorBeurt")</li>
                     <li>@Html.ActionLink("Mijn Reservaties", "Index", "Reservatie")</li>
                     }
                     @if (Request.IsAuthenticated && HttpContext.Current.User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Monitorbeurten", "Index", "MonitorBeurt")</li>
-                        <li>@Html.ActionLink("Reservaties", "Index", "Reservatie")</li>
+                        <li>@Html.ActionLink("Mijn Reservaties", "Index", "Reservatie")</li>
                         <li>@Html.ActionLink("Campussen", "Index", "Campus")</li>
-                        <li>@Html.ActionLink("Roles", "Index", "RolesAdmin")</li>
-                        <li>@Html.ActionLink("Users", "Index", "UsersAdmin")</li>
+                        <li>@Html.ActionLink("Rollen", "Index", "RolesAdmin")</li>
+                        <li>@Html.ActionLink("Gebruikers", "Index", "UsersAdmin")</li>
                     }
                 </ul>
                     @Html.Partial("_LoginPartial")

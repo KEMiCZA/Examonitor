@@ -10,6 +10,8 @@
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.MonitorBeurtId)
+    @Html.HiddenFor(model => model.Gereserveerd)
 
      <form class="form-horizontal" role="form">
 
@@ -49,10 +51,6 @@
 
 </form>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
