@@ -60,7 +60,7 @@ namespace Examonitor.Controllers
             switch (sortOrder)
             {
                 case "Datum_desc":
-                    MonitorBeurten = MonitorBeurten.OrderByDescending(s => s.Datum);
+                    MonitorBeurten = MonitorBeurten.OrderByDescending(s => s.BeginDatum);
                     break;
                 case "Campus":
                     MonitorBeurten = MonitorBeurten.OrderBy(s => s.Campus.Name);
@@ -75,7 +75,7 @@ namespace Examonitor.Controllers
                     MonitorBeurten = MonitorBeurten.OrderByDescending(s => s.ExamenNaam);
                     break;
                 default:
-                    MonitorBeurten = MonitorBeurten.OrderBy(s => s.Datum);
+                    MonitorBeurten = MonitorBeurten.OrderBy(s => s.BeginDatum);
                     break;
             }
 

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.BootstrapEditorTemplates.cshtml";
 }
 
 <h2>Create</h2>
@@ -23,26 +24,18 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Datum, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.BeginDatum, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Datum)
-                @Html.ValidationMessageFor(model => model.Datum, null, new { @class = "help-inline" })
+                @Html.EditorFor(model => model.BeginDatum)
+                @Html.ValidationMessageFor(model => model.BeginDatum, null, new { @class = "help-inline" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Start, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.EindDatum, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Start)
-                @Html.ValidationMessageFor(model => model.Start, null, new { @class = "help-inline" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Einde, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Einde)
-                @Html.ValidationMessageFor(model => model.Einde, null, new { @class = "help-inline" })
+                @Html.EditorFor(model => model.EindDatum)
+                @Html.ValidationMessageFor(model => model.EindDatum, null, new { @class = "help-inline" })
             </div>
         </div>
 

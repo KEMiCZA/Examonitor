@@ -28,11 +28,11 @@
         <th>
             @Html.ActionLink("Datum", "Index", new { sortOrder = ViewBag.DatumSortParm }, new {  })
         </th>
+        @*<th>
+        @Html.DisplayNameFor(model => model.Start)
+    </th>*@
         <th>
-            @Html.DisplayNameFor(model => model.Start)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Einde)
+            @Html.DisplayNameFor(model => model.EindDatum)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Duurtijd)
@@ -66,13 +66,14 @@
             @Html.DisplayFor(modelItem => item.ExamenNaam)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Datum)
+            @Html.DisplayFor(modelItem => item.BeginDatum)
         </td>
+        @*
+    <td>
+        @Html.DisplayFor(modelItem => item.Start)
+    </td>*@
         <td>
-            @Html.DisplayFor(modelItem => item.Start)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Einde)
+            @Html.DisplayFor(modelItem => item.EindDatum)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Duurtijd)
