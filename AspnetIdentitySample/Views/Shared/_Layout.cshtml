@@ -33,6 +33,7 @@
                         <li>@Html.ActionLink("Campussen", "Index", "Campus")</li>
                         <li>@Html.ActionLink("Rollen", "Index", "RolesAdmin")</li>
                         <li>@Html.ActionLink("Gebruikers", "Index", "UsersAdmin")</li>
+                        <li>@Html.ActionLink("Boodschap", "Edit/1", "AdminMessage")</li>
                     }
                 </ul>
                     @Html.Partial("_LoginPartial")
@@ -40,6 +41,15 @@
         </div>
     </div>
     <div class="container body-content">
+        <script type="text/javascript">
+            function updateShouts() {
+                // Assuming we have #shoutbox
+                $('.adminmessage').load('@Url.Action("GetMessage", "AdminMessage")');
+            }
+            setInterval("updateShouts()", 1000);
+        </script>
+        <div class="adminmessage">
+        </div>
         @RenderBody()
         <hr />
         <footer>

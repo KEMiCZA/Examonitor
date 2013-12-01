@@ -74,7 +74,7 @@ namespace Examonitor.Migrations
             }
 
             base.Seed(context);
-
+            
             List<Campus> campussen = new List<Campus>() { new Campus
                 {
                     Name = "Meistraat"
@@ -121,7 +121,9 @@ namespace Examonitor.Migrations
                     context.MonitorBeurt.AddOrUpdate(i => i.MonitorBeurtId, monitorbeurt);
                 }
             }
-       
+
+            context.AdminMessage.AddOrUpdate(i => i.Id, new AdminMessageModel { Message = "", Active = false });
+
         }
     }
 }

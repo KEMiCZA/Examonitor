@@ -9,8 +9,8 @@
 <h2>Monitor beurten</h2>
 
 <p>
-    @Html.ActionLink("Monitorbeurt toevoegen", "Create").If(User.IsInRole("Admin")) 
-    | @Html.ActionLink("Monitorbeurten importeren", "Import").If(User.IsInRole("Admin"))
+    @Html.ActionLink("Monitorbeurt toevoegen | ", "Create").If(User.IsInRole("Admin")) 
+    @Html.ActionLink("Monitorbeurten importeren", "Import").If(User.IsInRole("Admin"))
     
     @using (Html.BeginForm("Index", "MonitorBeurt", FormMethod.Get))
     {

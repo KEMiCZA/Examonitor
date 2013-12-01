@@ -47,10 +47,11 @@ namespace Examonitor.Models
                 .ToTable("Users");
         }
 
-        public System.Data.Entity.DbSet<Examonitor.Models.ToDo> ToDoes { get; set; }
+        public DbSet<Examonitor.Models.ToDo> ToDoes { get; set; }
         public DbSet<MonitorBeurtModel> MonitorBeurt { get; set; }
         public DbSet<ReservatieModel> Reservatie { get; set; }
         public DbSet<Campus> Campus { get; set; }
+        public DbSet<AdminMessageModel> AdminMessage { get; set; }
     }
 
 }

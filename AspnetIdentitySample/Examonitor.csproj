@@ -187,6 +187,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminMessageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MonitorBeurtController.cs" />
     <Compile Include="Controllers\ReservatieController.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdminMessageModel.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\AppModel.cs" />
     <Compile Include="Models\MonitorBeurtModel.cs" />
@@ -812,6 +814,7 @@
     <Content Include="Views\Shared\EditorTemplates\Decimal.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\MonitorBeurt\Import.cshtml" />
+    <Content Include="Views\AdminMessage\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
