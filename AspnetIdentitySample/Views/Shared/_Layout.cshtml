@@ -42,14 +42,19 @@
     </div>
     <div class="container body-content">
         <script type="text/javascript">
-            function updateShouts() {
-                // Assuming we have #shoutbox
-                $('.adminmessage').load('@Url.Action("GetMessage", "AdminMessage")');
+            function updateAdminMessage() {
+                $.get('@Url.Action("GetMessage", "AdminMessage")', function (data) {
+                    if (data.length != 0)
+                        $('.adminMessage').html("<div class=\"alert alert-info\"><strong>" + data + "</strong></div>");
+                    else
+                        $('.adminMessage').html();
+                });
+                
             }
-            setInterval("updateShouts()", 1000);
+            setInterval("updateAdminMessage()", 1000);
         </script>
-        <div class="adminmessage">
-        </div>
+        <div class="adminMessage"></div>
+        
         @RenderBody()
         <hr />
         <footer>

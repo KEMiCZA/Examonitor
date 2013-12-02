@@ -13,6 +13,7 @@ namespace Examonitor.Models
         [Key]
         public int Id { get; set; }
         [Display(Name = "Boodschap")]
+        [DataType(DataType.MultilineText)]
         public string Message { get; set; }
         [Display(Name = "Actief")]
         public bool Active { get; set; }
