@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Examonitor.Models;
 using Postal;
+using System.Configuration;
 
 namespace Examonitor.Controllers
 {
@@ -42,26 +43,26 @@ namespace Examonitor.Controllers
 
                     if (result.Succeeded)
                     {
-                        ViewBag.StatusMessage = "Account activation successful, you can now log in using your username and password.";
+                        ViewBag.StatusMessage = "Account geactiveerd, U kan nu inloggen met uw email en wachtwoord.";
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Invalid confirmation code.");
+                        ModelState.AddModelError("", "Foutieve bevestigingscode");
                     }
                 }
                 catch(InvalidOperationException)
                 {
-                    ModelState.AddModelError("", "Invalid user ID.");
+                    ModelState.AddModelError("", "Foutieve email");
                 }
                
             }
             else if(c == null && i == null)
             {
-                ViewBag.StatusMessage = "Please check your email for instructions on how to activate your account.";
+                ViewBag.StatusMessage = "Gelieve de instructies in de activatie-email te volgen";
             }
             else
             {
-                ModelState.AddModelError("", "Invalid user ID or confirmation code.");
+                ModelState.AddModelError("", "Foutieve bevestiginscode");
             }
 
             return View();
@@ -79,21 +80,31 @@ namespace Examonitor.Controllers
         public ActionResult ResetPassword(string userName)
         {
             var user = UserManager.FindByName(userName);
+            string adminEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString();
 
             if (user != null)
             {
+                String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+
                 dynamic email = new Email("ResetPassword");
+                email.Url = url;
                 email.To = user.Email;
+                email.From = adminEmail;
                 email.UserName = user.UserName;
                 email.UserId = user.Id;
                 email.ConfirmationToken = UserManager.GetPasswordResetToken(user.Id);
                 email.Send();
 
-                ViewBag.StatusMessage = "Please check your email for instructions on how to reset your password.";
+                ViewBag.StatusMessage = "Gelieve de instructies in de email te volgen";
             }
             else
             {
-                ModelState.AddModelError("", "Unknown user.");
+                ModelState.AddModelError("", "Foutieve email");
+
+                dynamic email = new Email("ResetPassword");
+                email.To = "test@foobar.com";
+                email.Send();
+
             }
 
             return View();
@@ -103,6 +114,7 @@ namespace Examonitor.Controllers
         public ActionResult ResetPasswordConfirm(string c, string i)
         {
             var user = UserManager.FindById(i);
+            string adminEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString();
 
             if (user != null)
             {
@@ -111,22 +123,26 @@ namespace Examonitor.Controllers
 
                 if (result.Succeeded)
                 {
+                    String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+
                     dynamic email = new Email("NewPassword");
+                    email.Url = url;
                     email.To = user.Email;
+                    email.From = adminEmail;
                     email.UserName = user.UserName;
                     email.Password = newPassword;
                     email.Send();
 
-                    ViewBag.StatusMessage = "A new password has been generated and emailed to you. Check your email for instructions on how to login and change your password.";
+                    ViewBag.StatusMessage = "Er werd voor U een nieuw wachtwoord gegenereerd. Gelieve de instructies in de email te volgen";
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Incorrect confirmation code.");
+                    ModelState.AddModelError("", "Foutieve bevestiginscode");
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Incorrect user ID.");
+                ModelState.AddModelError("", "Foutieve email");
             }
 
             return View();
@@ -144,11 +160,16 @@ namespace Examonitor.Controllers
         public ActionResult ResendActivation(string userName)
         {
             var mailUser = UserManager.FindByName(userName);
+            string adminEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString();
 
             if (mailUser != null && !mailUser.IsConfirmed)
             {
+                String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+
                 dynamic email = new Email("Activate");
+                email.Url = url;
                 email.To = mailUser.Email;
+                email.From = adminEmail;
                 email.UserName = mailUser.UserName;
                 email.UserId = mailUser.Id;
                 email.ConfirmationToken = UserManager.GetConfirmationToken(mailUser.Id);
@@ -158,12 +179,12 @@ namespace Examonitor.Controllers
             }
             else if(mailUser != null && mailUser.IsConfirmed)
             {
-                ModelState.AddModelError("", "User has already been confirmed.");
+                ModelState.AddModelError("", "Deze account is al geactiveerd");
 
             }
             else
             {
-                ModelState.AddModelError("", "Unknown user.");
+                ModelState.AddModelError("", "Foutieve email");
             }
 
             return View();
@@ -195,11 +216,11 @@ namespace Examonitor.Controllers
                 }
                 else if(user != null)
                 {
-                    ModelState.AddModelError("", "Account needs to be activated first.");
+                    ModelState.AddModelError("", "Account moet eerst worden geactiveerd!");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", "Foutieve email/wachtwoord combinatie");
                 }
             }
 
@@ -236,15 +257,19 @@ namespace Examonitor.Controllers
                     var user = new MyUser() { UserName = model.UserName };
                     user.Email = mail;
                     var result = await UserManager.CreateAsync(user, model.Password);
+                    string adminEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString();
 
                     if (result.Succeeded)
                     {
+                        String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
 
                         UserManager.AddToRole(user.Id, "Docent");
                         var mailUser = UserManager.FindByName(model.UserName);
 
                         dynamic email = new Email("Activate");
-                        email.To = mailUser.Email;
+                        email.Url = url;
+                        email.To = mailUser.UserName;
+                        email.From = adminEmail;
                         email.UserName = mailUser.UserName;
                         email.UserId = mailUser.Id;
                         email.ConfirmationToken = UserManager.GetConfirmationToken(mailUser.Id);
@@ -261,7 +286,7 @@ namespace Examonitor.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "E-mail is not valid");
+                    ModelState.AddModelError("", "Foutieve email");
                 }
             }
 
@@ -293,10 +318,10 @@ namespace Examonitor.Controllers
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
+                message == ManageMessageId.ChangePasswordSuccess ? "Uw wachtwoord werd veranderd"
+                : message == ManageMessageId.SetPasswordSuccess ? "Uw wachtwoord werd veranderd"
                 : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.Error ? "An error has occurred."
+                : message == ManageMessageId.Error ? "Er heeft zich een fout opgetreden"
                 : "";
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");

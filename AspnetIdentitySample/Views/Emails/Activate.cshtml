@@ -3,10 +3,10 @@
 }
 
 To: @ViewBag.To
-From: lolcats@website.com
-Subject: Complete Registration Process
+From: @ViewBag.From
+Subject: Registratie voltooien
 
-Hello @ViewBag.UserName,
+Beste @ViewBag.UserName,
 
-To complete the registration process click on this link
-http://localhost/Account/Activate/@ViewBag.ConfirmationToken/@ViewBag.UserId
+Gelieve de onderstaande link te volgen om uw registratie te voltooien:
+@ViewBag.Url/Account/Activate/@ViewBag.ConfirmationToken/@ViewBag.UserId

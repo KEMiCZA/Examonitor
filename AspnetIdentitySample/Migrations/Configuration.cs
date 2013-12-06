@@ -5,6 +5,7 @@ namespace Examonitor.Migrations
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -26,7 +27,7 @@ namespace Examonitor.Migrations
 
             string adminName = "Admin";
             string adminPassword = "123456";
-            string adminEmail = "ad@m.in";
+            string adminEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString();
             string adminRole = "Admin";
 
             List<string> testUsers = new List<string>() { "user1@ap.be", "user2@ap.be", "user3@ap.be" };
