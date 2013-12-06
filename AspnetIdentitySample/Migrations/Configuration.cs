@@ -74,7 +74,7 @@ namespace Examonitor.Migrations
             }
 
             base.Seed(context);
-
+            
             List<Campus> campussen = new List<Campus>() { new Campus
                 {
                     Name = "Meistraat"
@@ -95,11 +95,9 @@ namespace Examonitor.Migrations
             List<MonitorBeurtModel> monitorbeurten = new List<MonitorBeurtModel>(){
                new MonitorBeurtModel
                {
-                   Datum = DateTime.Parse("2013/10/18"),
+                   BeginDatum = DateTime.Parse("2013/10/18 08:00 AM"),
+                   EindDatum = DateTime.Parse("2013/10/18 08:00 AM"),
                    ExamenNaam = "Ontwikkelen in een bedrijfsomgeving",
-                   Start = "8:30",
-                   Einde = "10:30",
-                   Duurtijd = "2:30",
                    Capaciteit = 2,
                    Gereserveerd = 0,
                    Campus = campussen[0],
@@ -108,15 +106,12 @@ namespace Examonitor.Migrations
                },
                new MonitorBeurtModel
                {
-                   Datum = DateTime.Parse("2013/10/18"),
+                   BeginDatum = DateTime.Parse("2013/10/18 08:00 AM"),
+                   EindDatum = DateTime.Parse("2013/10/18 08:00 AM"),
                    ExamenNaam = "Informatica-architectuur",
-                   Start = "8:30",
-                   Einde = "10:30",
-                   Duurtijd = "2:30",
                    Capaciteit = 2,
                    Campus = campussen[1],
-                   Gereserveerd = 0,
-                   
+                   Gereserveerd = 0
                }};
 
             foreach (MonitorBeurtModel monitorbeurt in monitorbeurten)
@@ -126,7 +121,9 @@ namespace Examonitor.Migrations
                     context.MonitorBeurt.AddOrUpdate(i => i.MonitorBeurtId, monitorbeurt);
                 }
             }
-       
+
+            context.AdminMessage.AddOrUpdate(i => i.Id, new AdminMessageModel { Message = "", Active = false });
+
         }
     }
 }

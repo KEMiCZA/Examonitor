@@ -18,12 +18,10 @@
         <th>
             @Html.ActionLink("Datum", "Index", new { sortOrder = ViewBag.DatumSortParm }, new { })
         </th>
+            @Html.DisplayNameFor(model => model.Toezichtbeurt.BeginDatum)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Toezichtbeurt.Start)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Toezichtbeurt.Einde)
+            @Html.DisplayNameFor(model => model.Toezichtbeurt.EindDatum)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Toezichtbeurt.Duurtijd)
@@ -52,13 +50,10 @@
             @Html.DisplayFor(modelItem => item.Toezichtbeurt.ExamenNaam)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Toezichtbeurt.Datum)
+            @Html.DisplayFor(modelItem => item.Toezichtbeurt.BeginDatum)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Toezichtbeurt.Start)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Toezichtbeurt.Einde)
+            @Html.DisplayFor(modelItem => item.Toezichtbeurt.EindDatum)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Toezichtbeurt.Duurtijd)

@@ -9,20 +9,22 @@
 <h2>Monitor beurten</h2>
 
 <p>
+    
+    
     @if (Request.IsAuthenticated && HttpContext.Current.User.IsInRole("Admin"))
     {
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Monitorbeurt toevoegen | ", "Create")
+        @Html.ActionLink("Monitorbeurten importeren", "Import")
         <span>|</span>
         @Html.ActionLink("Delete All", "DeleteAll")
     }
  
     @using (Html.BeginForm("Index", "MonitorBeurt", FormMethod.Get))
     {
-    <p>
-        Campus: @Html.DropDownList("MonitorBeurtCampus", "All")
-        @*Campus: @Html.TextBox("SearchString")*@
-        <input type="submit" value="Filter" />
-    </p>
+        <div class="form-horizontal col-sm-3">
+            @Html.DropDownList("MonitorBeurtCampus", ViewBag.MonitorBeurtCampus as SelectList, "All", new { @class = "form-control" })
+        </div>
+        <input type="submit" value="Filter" class="btn btn-success btn-sm" />
     }
 </p>
 <table class="table">
@@ -33,12 +35,6 @@
         </th>
         <th>
             @Html.ActionLink("Datum", "Index", new { sortOrder = ViewBag.DatumSortParm }, new {  })
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Start)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Einde)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Duurtijd)
@@ -72,13 +68,7 @@
             @Html.DisplayFor(modelItem => item.ExamenNaam)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Datum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Start)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Einde)
+            @Html.DisplayFor(modelItem => item.BeginDatum)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Duurtijd)
@@ -96,11 +86,10 @@
             @Html.DisplayFor(modelItem => item.Campus.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.MonitorBeurtId }).If(User.IsInRole("Admin")) 
-            @Html.ActionLink("Details", "Details", new { id = item.MonitorBeurtId }).If(User.IsInRole("Admin")) 
-            @Html.ActionLink("Delete", "Delete", new { id = item.MonitorBeurtId }).If(User.IsInRole("Admin"))
-            @Html.ActionLink("Reserveren", "ReservatieToevoegen", "Reservatie", new { id=item.MonitorBeurtId },"").If(!item.ReservedByCurrentUser && item.Available)
-            @Html.ActionLink("Uitschrijven", "Delete", "Reservatie", new { id = item.CurrentRegistratieID }, "").If(item.ReservedByCurrentUser)
+            @if (User.IsInRole("Admin")) { @Html.Raw("<a href=\"" + @Url.Action("Edit", "Monitorbeurt", new { id = item.MonitorBeurtId }) + "\"><i class=\"glyphicon glyphicon-edit black\" title=\"Bewerken\"></i></a>"); }
+            @if (User.IsInRole("Admin")) { @Html.Raw("<a href=\"" + @Url.Action("Delete", "Monitorbeurt", new { id = item.MonitorBeurtId }) + "\"><i class=\"glyphicon glyphicon-remove red\" title=\"Verwijderen\"></i></a>"); }
+            @if (!item.ReservedByCurrentUser && item.Available) { @Html.Raw("<a href=\"" + @Url.Action("ReservatieToevoegen", "Reservatie", new { id = item.MonitorBeurtId }) + "\"><i class=\"glyphicon glyphicon-log-in\" title=\"Inschrijven\"></i></a>");}
+            @if (item.ReservedByCurrentUser){ @Html.Raw("<a href=\"" + @Url.Action("Delete", "Reservatie", new { id = item.CurrentRegistratieID }) + "\"><i class=\"glyphicon glyphicon-log-out\" title=\"Uitschrijven\"></i></a>"); }
         </td>
     </tr>
 }

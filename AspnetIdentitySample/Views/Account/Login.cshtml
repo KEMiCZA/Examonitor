@@ -1,7 +1,7 @@
 @model Examonitor.Models.LoginViewModel
 
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = "Aanmelden";
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -11,7 +11,7 @@
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
+                <h4>Gebruik jouw AP e-mail address om aan te melden.</h4>
                 <hr />
                 @Html.ValidationSummary(true)
                 <div class="form-group">
@@ -42,9 +42,9 @@
                     </div>
                 </div>
                 <p>
-                    @Html.ActionLink("Forgot password?", "ResetPassword") <br/>
-                    @Html.ActionLink("Resend activation email.", "ResendActivation") <br />
-                    @Html.ActionLink("Register", "Register") if you don't have a local account.
+                    @Html.ActionLink("Wachtwoord vergeten?", "ResetPassword") <br/>
+                    @Html.ActionLink("Stuur nog een activatie e-mail.", "ResendActivation") <br />
+                    @Html.ActionLink("Registreren", "Register")
                 </p>
             }
         </section>

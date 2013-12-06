@@ -4,21 +4,24 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Examonitor.Models
 {
     public class MonitorBeurtModel
     {
-        [Key] public int MonitorBeurtId { get; set; }
-        [Display(Name = "Examen")]
+        [Key] 
+        public int MonitorBeurtId { get; set; }
+        [Display(Name = "Examen Naam")]
         public string ExamenNaam { get; set; }
-        [Display(Name = "Datum")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime Datum { get; set; }
-        public string Start { get; set; }
-        public string Einde { get; set; }
-        public string Duurtijd { get; set; }
+        [Display(Name = "Begin Datum")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
+        public DateTime BeginDatum { get; set; }
+        [Display(Name = "Eind Datum")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
+        public DateTime EindDatum { get; set; }
         public int Capaciteit { get; set; }
         public int Gereserveerd { get; set; }
         public bool Digitaal { get; set; }      
@@ -31,5 +34,9 @@ namespace Examonitor.Models
         public bool Available { get; set; }
         [NotMapped]
         public int CurrentRegistratieID { get; set; }
+        [NotMapped]
+        public string Duurtijd { get; set; }
+        
+ 
     }
 }
