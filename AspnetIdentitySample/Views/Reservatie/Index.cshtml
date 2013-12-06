@@ -13,10 +13,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Toezichtbeurt.ExamenNaam)
+            @Html.ActionLink("ExamenNaam", "Index", new { sortOrder = ViewBag.ExamenNaamSortParm }, new { })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Toezichtbeurt.BeginDatum)
+            @Html.ActionLink("BeginDatum", "Index", new { sortOrder = ViewBag.DatumSortParm }, new { })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Toezichtbeurt.EindDatum)
@@ -25,7 +25,7 @@
             @Html.DisplayNameFor(model => model.Toezichtbeurt.Duurtijd)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Toezichtbeurt.Campus)
+            @Html.ActionLink("Campus", "Index", new { sortOrder = ViewBag.CampusSortParm })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Toezichtbeurt.Digitaal)

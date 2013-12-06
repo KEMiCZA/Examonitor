@@ -26,15 +26,41 @@ namespace Examonitor.Controllers
         
         // GET: /Reservatie/
         [Authorize]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string sortOrder)
         {
-            var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId()); 
+            var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId());
             var reservatie = from m in db.Reservatie
-                                 select m;
+                             select m;
+            ViewBag.DatumSortParm = String.IsNullOrEmpty(sortOrder) ? "Datum_desc" : "";
+            ViewBag.ExamenNaamSortParm = sortOrder == "ExamenNaam" ? "ExamenNaam_desc" : "ExamenNaam";
+            ViewBag.CampusSortParm = sortOrder == "Campus" ? "Campus_desc" : "Campus";
+
+            switch (sortOrder)
+            {
+                case "Datum_desc":
+                    reservatie = reservatie.OrderByDescending(s => s.Toezichtbeurt.BeginDatum);
+                    break;
+                case "Campus":
+                    reservatie = reservatie.OrderBy(s => s.Toezichtbeurt.Campus.Name);
+                    break;
+                case "Campus_desc":
+                    reservatie = reservatie.OrderByDescending(s => s.Toezichtbeurt.Campus.Name);
+                    break;
+                case "ExamenNaam":
+                    reservatie = reservatie.OrderBy(s => s.Toezichtbeurt.ExamenNaam);
+                    break;
+                case "ExamenNaam_desc":
+                    reservatie = reservatie.OrderByDescending(s => s.Toezichtbeurt.ExamenNaam);
+                    break;
+                default:
+                    reservatie = reservatie.OrderBy(s => s.Toezichtbeurt.BeginDatum);
+                    break;
+            }
             if (!User.IsInRole("Admin"))
             {
-            reservatie = reservatie.Where(x => x.UserName == currentUser.UserName);
+                reservatie = reservatie.Where(x => x.UserName == currentUser.UserName);
             }
+            
             
             return View(reservatie.ToList());
         }
