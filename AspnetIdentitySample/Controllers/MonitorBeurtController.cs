@@ -34,16 +34,13 @@ namespace Examonitor.Controllers
 
         [Authorize]
         // GET: /MonitorBeurt/
-        public async Task<ActionResult> Index(string MonitorBeurtCampus, string sortOrder)
+        public async Task<ActionResult> Index(string MonitorBeurtCampus, string sortOrder, string currentFilter)
         {
+   
+            if (MonitorBeurtCampus == null)
+                MonitorBeurtCampus = currentFilter;
+           ViewBag.CurrentFilter = MonitorBeurtCampus;
             
-            var CampusLijst = new List<string>();
-
-            var CampusQry = from d in db.Campus
-                                 select d.Name;
-
-            CampusLijst.AddRange(CampusQry.Distinct());
-            ViewBag.MonitorBeurtCampus = new SelectList(CampusLijst);
             
             var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             var reservatie = from m in db.Reservatie
@@ -83,15 +80,11 @@ namespace Examonitor.Controllers
                     MonitorBeurten = MonitorBeurten.OrderBy(s => s.BeginDatum);
                     break;
             }
-
-
+            
             if (!string.IsNullOrEmpty(MonitorBeurtCampus))
             {
-                MonitorBeurtCampuss = MonitorBeurtCampus;
-            }
-            if (!string.IsNullOrEmpty(MonitorBeurtCampuss))
-            {
-                MonitorBeurten = MonitorBeurten.Where(x => x.Campus.Name == MonitorBeurtCampuss);
+                MonitorBeurten = MonitorBeurten.Where(x => x.Campus.Name.ToUpper().Contains(MonitorBeurtCampus.ToUpper()));
+               
             }
             foreach (var mb in MonitorBeurten)
             {

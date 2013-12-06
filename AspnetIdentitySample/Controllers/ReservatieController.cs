@@ -61,6 +61,7 @@ namespace Examonitor.Controllers
             reservatie = reservatie.Where(x => x.UserName == currentUser.UserName);
             }
             
+            
             return View(reservatie.ToList());
         }
         // GET: /Reservatie/All

@@ -1,6 +1,6 @@
 ﻿@using Examonitor;
 @model IEnumerable<Examonitor.Models.MonitorBeurtModel>
-           
+@Styles.Render("~/Content/Sites.css")  
 
 @{
     ViewBag.Title = "Monitor Beurten";
@@ -20,21 +20,21 @@
     }
  
     @using (Html.BeginForm("Index", "MonitorBeurt", FormMethod.Get))
-    {
-        <div class="form-horizontal col-sm-3">
-            @Html.DropDownList("MonitorBeurtCampus", ViewBag.MonitorBeurtCampus as SelectList, "All", new { @class = "form-control" })
-        </div>
-        <input type="submit" value="Filter" class="btn btn-success btn-sm" />
+    {        
+        <p>
+            Campus: @Html.TextBox("MonitorBeurtCampus", ViewBag.CurrentFilter as string)  
+            <input type="submit" value="Search" class="btn btn-success btn-sm" /></p>
+        
     }
 </p>
 <table class="table">
     <tr>
         <th>
             
-            @Html.ActionLink("Examen", "Index", new { sortOrder = ViewBag.ExamenNaamSortParm }, new { })
+            @Html.ActionLink("Examen", "Index", new { sortOrder = ViewBag.ExamenNaamSortParm, MonitorBeurtCampus = ViewBag.CurrentFilter }, new { })
         </th>
         <th>
-            @Html.ActionLink("Datum", "Index", new { sortOrder = ViewBag.DatumSortParm }, new {  })
+            @Html.ActionLink("Datum", "Index", new { sortOrder = ViewBag.DatumSortParm, MonitorBeurtCampus = ViewBag.CurrentFilter }, new { })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Duurtijd)
@@ -49,7 +49,7 @@
             @Html.DisplayNameFor(model => model.Digitaal)
         </th>
         <th>
-            @Html.ActionLink("Campus", "Index", new { sortOrder = ViewBag.CampusSortParm })
+            @Html.ActionLink("Campus", "Index", new { sortOrder = ViewBag.CampusSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th></th>
     </tr>

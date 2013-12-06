@@ -68,3 +68,12 @@ input[type="checkbox"].input-validation-error {
 div.adminMessage {
    white-space:pre;
 }
+.filter
+{
+    list-style: none;
+}
+.filter li
+{
+    float:left;
+    display: inline;
+}
