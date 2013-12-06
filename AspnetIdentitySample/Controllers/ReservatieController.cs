@@ -38,7 +38,7 @@ namespace Examonitor.Controllers
             switch (sortOrder)
             {
                 case "Datum_desc":
-                    reservatie = reservatie.OrderByDescending(s => s.Toezichtbeurt.Datum);
+                    reservatie = reservatie.OrderByDescending(s => s.Toezichtbeurt.BeginDatum);
                     break;
                 case "Campus":
                     reservatie = reservatie.OrderBy(s => s.Toezichtbeurt.Campus.Name);
@@ -53,7 +53,7 @@ namespace Examonitor.Controllers
                     reservatie = reservatie.OrderByDescending(s => s.Toezichtbeurt.ExamenNaam);
                     break;
                 default:
-                    reservatie = reservatie.OrderBy(s => s.Toezichtbeurt.Datum);
+                    reservatie = reservatie.OrderBy(s => s.Toezichtbeurt.BeginDatum);
                     break;
             }
             if (!User.IsInRole("Admin"))
