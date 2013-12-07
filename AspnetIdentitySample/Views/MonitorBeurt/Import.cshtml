@@ -6,9 +6,37 @@
 
 <h2>@ViewBag.Title</h2>
 
-<p>Een .txt bestand waarin per regel een monitorbeurt staat.</p>
-<p>Syntax: <i class="red">Naam;BeginDatum;EindDatum;Capaciteit;Digitaal;Campus</i></p>
-<p>Voorbeeld van een regel: <b>Ontwikkelen in een bedrijfsomgeving;2013/10/18 08:00 AM;2013/10/18 12:00 PM;5;y;Meistraat</b></p>
+<p>Een json tekstbestand importeren.</p>
+<p>Voorbeeld:<b>
+    <pre>
+{
+	"monitorbeurten": [
+		{
+			"monitorbeurt": 
+			{
+			  "ExamenNaam": "Monitorbeurt 1",
+			  "BeginDatum": "2013/10/18 08:00 AM",
+			  "EindDatum": "2013/10/18 08:00 PM",
+			  "Capaciteit": 10,
+			  "Digitaal": false,
+			  "Campus": "Campus 1"
+			}
+		},
+		{
+			"monitorbeurt": 
+			{
+			  "ExamenNaam": "Monitorbeurt 2",
+			  "BeginDatum": "2013/10/18 08:00 AM",
+			  "EindDatum": "2013/10/18 08:00 PM",
+			  "Capaciteit": 20,
+			  "Digitaal": true,
+			  "Campus": "Campus 2"
+			}
+		}
+	]
+}
+</pre>
+    </b></p>
 <p>Indien de campus niet bestaat zal deze aangemaakt worden.</p>
 <p>TODO: testen schrijven (Exception handling) en de input van DateTime aanpassen zodat het nakkelijker is te exporteren/importeren</p>
 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))

@@ -15,6 +15,9 @@ using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using Newtonsoft.Json;
+using Daishi.JsonParser;
+using Examonitor.Utility;
 
 namespace Examonitor.Controllers
 {
@@ -116,78 +119,59 @@ namespace Examonitor.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Import(HttpPostedFileBase file)
         {
-            List<MonitorBeurtModel> monitorbeurten = new List<MonitorBeurtModel>();
-            Campus campus = null;
+            var campusLijst = new List<Campus>();
             IQueryable<Campus> campusQuery = null;
-            if (ModelState.IsValid)
+            if(ModelState.IsValid && file != null)
             {
-                if (file.ContentLength > 0)
+                var monitorbeurtenParsed = new MonitorbeurtParser(file.InputStream, @"monitorbeurt");
+                monitorbeurtenParsed.Parse();
+                foreach(var monitorbeurt in monitorbeurtenParsed.Result)
                 {
-                    StreamReader reader = new StreamReader(file.InputStream);
-                    string line = reader.ReadLine();
-                    while (line != null)
-                    {
-                        string[] input = line.Split(';');
-                        if(input.Length == 6)
-                        {
-                            String examenNaam = input[0];
-                            DateTime beginDatum = DateTime.Parse(input[1]);
-                            DateTime eindDatum = DateTime.Parse(input[2]);
-                            int capaciteit = Convert.ToInt32(input[3]);
-                            bool digitaal = input[4].Equals("y");
-                            String campusNaam = input[5];
-                            campusQuery = db.Campus.Where(n => n.Name.Equals(campusNaam));
-                            if (campusQuery.Count().Equals(0)) // Campus does not exist, create it :)
-                            {
-                                campus = new Campus { Name = input[5] };
-                                db.Campus.Add(campus);
-                            }
-                            else {
-                                foreach(var x in campusQuery)
-                                    campus = x;
-                            }
+                    bool campusAlreadyExists = false; // We asume the campus does not exist yet
 
-                            monitorbeurten.Add(new MonitorBeurtModel
-                            {
-                                ExamenNaam = examenNaam,
-                                BeginDatum = beginDatum,
-                                EindDatum = eindDatum,
-                                Capaciteit = capaciteit,
-                                Digitaal = digitaal,
-                                Campus = campus,
-                                Gereserveerd = 0,
-                            });
-                        }
-                        line = reader.ReadLine();
-                    }
-                    reader.Close();
-                    foreach (MonitorBeurtModel monitorbeurt in monitorbeurten)
+                    campusQuery = db.Campus.Where(n => n.Name.Equals(monitorbeurt.Campus.Name));
+                    foreach(var campus in campusQuery) //First check if the campus exists in the database
                     {
-                        if (db.MonitorBeurt.Where(n => n.ExamenNaam.Equals(monitorbeurt.ExamenNaam)).Count().Equals(0))
-                        {
-                            db.MonitorBeurt.Add(monitorbeurt);
+                        if (campus.Name == monitorbeurt.Campus.Name) {
+                            monitorbeurt.Campus = campus;
+                            campusAlreadyExists = true; 
                         }
                     }
-                    try
+
+                    if(!campusAlreadyExists)
                     {
-                        db.SaveChanges();
-                    }
-                    catch (DbEntityValidationException e)
-                    {
-                        foreach (var eve in e.EntityValidationErrors)
+                        foreach(var campus in campusLijst) // if the campus is not in the db check if it exists in our current uploaded list
                         {
-                            Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                                eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                            foreach (var ve in eve.ValidationErrors)
-                            {
-                                Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                                    ve.PropertyName, ve.ErrorMessage);
+                            if (campus.Name == monitorbeurt.Campus.Name) {
+                                monitorbeurt.Campus = campus;
+                                campusAlreadyExists = true; 
                             }
                         }
-                        throw;
                     }
-                    
+
+                    if (db.MonitorBeurt.Where(n => n.ExamenNaam.Equals(monitorbeurt.ExamenNaam)).Count().Equals(0))
+                        db.MonitorBeurt.Add(monitorbeurt);
+
+                    if(!campusAlreadyExists) // if the campus does not exist in the database nor the uploaded list then add it to our current list
+                        campusLijst.Add(monitorbeurt.Campus);
                 }
+            }
+            file.InputStream.Close();
+
+            try { db.SaveChanges(); }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
             }
 
             return RedirectToAction("Index");
