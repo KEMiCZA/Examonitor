@@ -5,23 +5,23 @@ Examonitor
 <p>Om het adres te wijzigen dient het volgende XML bestand te worden aangepast: web.config.</p>
 
 <p><b>
-<appSettings>
-    <add key="AdminEmail" value="examonitor@ap.be" />
-</appSettings>
+&lt;appSettings&gt;<br />
+    &lt;add key=&quot;AdminEmail&quot; value=&quot;examonitor@ap.be&quot; /&gt;<br />
+&lt;/appSettings&gt;<br />
 </b></p>
 
 
 <h3>Mail server instellen</h3>
 <p>Om het versturen van mails door de applicatie mogelijk te maken dienen de volgende instellingen te worden aangepast aan de configuratie van de server.</p>
 <p><b>
-<system.net>
-    <mailSettings>
-      <smtp deliveryMethod="SpecifiedPickupDirectory">
-        <specifiedPickupDirectory pickupDirectoryLocation="c:\email" />
-        <network host="localhost" />
-      </smtp>
-    </mailSettings>
-  </system.net>
+&lt;system.net&gt;<br />
+    &lt;mailSettings&gt;<br />
+      &lt;smtp deliveryMethod=&quot;SpecifiedPickupDirectory&quot;&gt; <br />
+        &lt;specifiedPickupDirectory pickupDirectoryLocation=&quot;c:\email&quot; /&gt; <br />
+        &lt;network host=&quot;localhost&quot; /&gt;<br />
+      &lt;/smtp&gt;<br />
+    &lt;/mailSettings&gt;<br />
+  &lt;/system.net&gt;<br />
 </b></p>
 
 <h3>Concept</h3>
