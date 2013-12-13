@@ -347,6 +347,7 @@
     <Content Include="Content\themes\bootstrap\datepicker.less" />
     <Content Include="Content\themes\bootstrap\bootstrap-filebutton.less" />
     <Content Include="Content\themes\bootstrap\bootstrap.less" />
+    <None Include="Properties\PublishProfiles\Examonitor.pubxml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
