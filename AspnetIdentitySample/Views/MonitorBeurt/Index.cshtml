@@ -6,26 +6,24 @@
     ViewBag.Title = "Monitor Beurten";
 }
 
-<h2>Monitor beurten</h2>
-
 <p>
-    
-    
+    <h2>Monitor beurten</h2>
+
     @if (Request.IsAuthenticated && HttpContext.Current.User.IsInRole("Admin"))
     {
         @Html.ActionLink("Monitorbeurt toevoegen", "Create")
         <span> | </span>
         @Html.ActionLink("Monitorbeurten importeren", "Import")
         <span> | </span>
-        @Html.ActionLink("Delete All", "DeleteAll")
+        @Html.ActionLink("Alles Verwijderen ", "DeleteAll")
     }
- 
+    <br /><br />
     @using (Html.BeginForm("Index", "MonitorBeurt", FormMethod.Get))
-    {        
-        <p>
-            Campus: @Html.TextBox("MonitorBeurtCampus", ViewBag.CurrentFilter as string)  
-            <input type="submit" value="Search" class="btn btn-success btn-sm" /></p>
-        
+    {
+        <div class="form-inline">
+            Campus: @Html.Editor("MonitorBeurtCampus", ViewBag.CurrentFilter as string)
+            <input type="submit" value="Zoeken" class="btn btn-success btn-sm" />
+        </div>
     }
 </p>
 <table class="table">
