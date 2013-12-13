@@ -13,9 +13,10 @@
     
     @if (Request.IsAuthenticated && HttpContext.Current.User.IsInRole("Admin"))
     {
-        @Html.ActionLink("Monitorbeurt toevoegen | ", "Create")
+        @Html.ActionLink("Monitorbeurt toevoegen", "Create")
+        <span> | </span>
         @Html.ActionLink("Monitorbeurten importeren", "Import")
-        <span>|</span>
+        <span> | </span>
         @Html.ActionLink("Delete All", "DeleteAll")
     }
  
