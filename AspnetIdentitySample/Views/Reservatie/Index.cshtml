@@ -7,9 +7,7 @@
 
 <h2>Reservaties</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create").If(User.IsInRole("Admin"))
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -73,8 +71,7 @@
         </td>
         <td>
             @Html.ActionLink("Delete", "Delete", new { id = item.ReservatieId })
-            @Html.ActionLink("Edit", "Edit", new { id = item.ReservatieId }).If(User.IsInRole("Admin"))        
-            @Html.ActionLink("Details", "Details", new { id = item.ReservatieId }).If(User.IsInRole("Admin"))        
+            
             
         </td>
     </tr>

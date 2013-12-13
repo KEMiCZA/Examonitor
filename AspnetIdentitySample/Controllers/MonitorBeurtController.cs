@@ -48,10 +48,10 @@ namespace Examonitor.Controllers
             var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             var reservatie = from m in db.Reservatie
                              select m;
-            if (!User.IsInRole("Admin"))
-            {
+            //if (!User.IsInRole("Admin"))
+         //   {
                 reservatie = reservatie.Where(x => x.UserName == currentUser.UserName);
-            }
+         //   }
 
             var reservatiesUser = reservatie.ToList();
 

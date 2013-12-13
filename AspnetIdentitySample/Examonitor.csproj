@@ -792,10 +792,7 @@
     <Content Include="Views\MonitorBeurt\Details.cshtml" />
     <Content Include="Views\MonitorBeurt\Edit.cshtml" />
     <Content Include="Views\MonitorBeurt\Index.cshtml" />
-    <Content Include="Views\Reservatie\Create.cshtml" />
     <Content Include="Views\Reservatie\Delete.cshtml" />
-    <Content Include="Views\Reservatie\Details.cshtml" />
-    <Content Include="Views\Reservatie\Edit.cshtml" />
     <Content Include="Views\Reservatie\Index.cshtml" />
     <Content Include="Views\Campus\Create.cshtml" />
     <Content Include="Views\Campus\Delete.cshtml" />

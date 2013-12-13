@@ -52,15 +52,26 @@ namespace Examonitor.Controllers
                 case "ExamenNaam_desc":
                     reservatie = reservatie.OrderByDescending(s => s.Toezichtbeurt.ExamenNaam);
                     break;
-                default:
-                    reservatie = reservatie.OrderBy(s => s.Toezichtbeurt.BeginDatum);
+                default:                    
+                    if (!User.IsInRole("Admin"))
+                    {
+                        reservatie = reservatie.OrderBy(s => s.Toezichtbeurt.BeginDatum);
+                    }
+                    else
+                    {
+                        reservatie = reservatie.OrderBy(s => s.Toezichtbeurt.ExamenNaam);
+                    }
+                    
                     break;
             }
             if (!User.IsInRole("Admin"))
             {
             reservatie = reservatie.Where(x => x.UserName == currentUser.UserName);
             }
-            
+            foreach (var re in reservatie)
+            {
+                re.Toezichtbeurt.Duurtijd = re.Toezichtbeurt.EindDatum.Subtract(re.Toezichtbeurt.BeginDatum).ToString();
+            }
             
             return View(reservatie.ToList());
         }
@@ -108,7 +119,8 @@ namespace Examonitor.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ToezichtbeurtId = new SelectList(db.MonitorBeurt, "MonitorBeurtId", "Start", res.ToezichtbeurtId);            
+            ViewBag.ToezichtbeurtId = new SelectList(db.MonitorBeurt, "MonitorBeurtId", "Start", res.ToezichtbeurtId);
+            
             return RedirectToAction("index");           
             
         }
