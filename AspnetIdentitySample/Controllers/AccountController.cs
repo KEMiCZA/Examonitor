@@ -111,6 +111,40 @@ namespace Examonitor.Controllers
         }
 
         [AllowAnonymous]
+        public ActionResult ResetAdminPassword()
+        {
+            var user = UserManager.FindByName("Admin");
+            string adminEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString();
+
+            if (user != null)
+            {
+                String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+
+                dynamic email = new Email("ResetPassword");
+                email.Url = url;
+                email.To = adminEmail;
+                email.From = adminEmail;
+                email.UserName = user.UserName;
+                email.UserId = user.Id;
+                email.ConfirmationToken = UserManager.GetPasswordResetToken(user.Id);
+                email.Send();
+
+                ViewBag.StatusMessage = "Gelieve de instructies in de email te volgen";
+            }
+            else
+            {
+                ModelState.AddModelError("", "Foutieve email");
+
+                dynamic email = new Email("ResetPassword");
+                email.To = "test@foobar.com";
+                email.Send();
+
+            }
+
+            return View("Login");
+        }
+
+        [AllowAnonymous]
         public ActionResult ResetPasswordConfirm(string c, string i)
         {
             var user = UserManager.FindById(i);
@@ -124,6 +158,11 @@ namespace Examonitor.Controllers
                 if (result.Succeeded)
                 {
                     String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+
+                    if (user.UserName.Equals("Admin"))
+                    {
+                        user.Email = adminEmail;
+                    }
 
                     dynamic email = new Email("NewPassword");
                     email.Url = url;
