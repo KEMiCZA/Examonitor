@@ -29,7 +29,7 @@
                     @if (Request.IsAuthenticated && HttpContext.Current.User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Monitorbeurten", "Index", "MonitorBeurt")</li>
-                        <li>@Html.ActionLink("Mijn Reservaties", "Index", "Reservatie")</li>
+                        <li>@Html.ActionLink("Reservaties", "Index", "Reservatie")</li>
                         <li>@Html.ActionLink("Campussen", "Index", "Campus")</li>
                         <li>@Html.ActionLink("Rollen", "Index", "RolesAdmin")</li>
                         <li>@Html.ActionLink("Gebruikers", "Index", "UsersAdmin")</li>
