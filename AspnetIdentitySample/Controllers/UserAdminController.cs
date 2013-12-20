@@ -22,6 +22,9 @@ namespace Examonitor.Controllers
             context = new MyDbContext();
             UserManager = new UserManager<MyUser>(new UserStore<MyUser>(context));
             RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+
+
+            UserManager.UserValidator = new UserValidator<MyUser>(UserManager) { AllowOnlyAlphanumericUserNames = false };
         }
 
         public UsersAdminController(UserManager<MyUser> userManager, RoleManager<IdentityRole> roleManager)
@@ -136,7 +139,7 @@ namespace Examonitor.Controllers
             }
             ViewBag.RoleId = new SelectList(RoleManager.Roles, "Id", "Name");
             var user = await UserManager.FindByIdAsync(id);
-            user.UserName = formuser.UserName;
+            user.UserName = formuser.Email;
             user.Email = formuser.Email;
             if (ModelState.IsValid)
             {
