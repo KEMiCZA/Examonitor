@@ -84,7 +84,7 @@ namespace Examonitor.Controllers
 
             if (user != null)
             {
-                String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+                String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) + "/" + "Examonitor";
 
                 dynamic email = new Email("ResetPassword");
                 email.Url = url;
@@ -118,7 +118,7 @@ namespace Examonitor.Controllers
 
             if (user != null)
             {
-                String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+                String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) + "/" + "Examonitor";
 
                 dynamic email = new Email("ResetPassword");
                 email.Url = url;
@@ -157,7 +157,7 @@ namespace Examonitor.Controllers
 
                 if (result.Succeeded)
                 {
-                    String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+                    String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) + "/" + "Examonitor";
 
                     if (user.UserName.Equals("Admin"))
                     {
@@ -203,7 +203,7 @@ namespace Examonitor.Controllers
 
             if (mailUser != null && !mailUser.IsConfirmed)
             {
-                String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+                String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) + "/" + "Examonitor";
 
                 dynamic email = new Email("Activate");
                 email.Url = url;
@@ -300,7 +300,7 @@ namespace Examonitor.Controllers
 
                     if (result.Succeeded)
                     {
-                        String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+                        String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) + "/" + "Examonitor";
 
                         UserManager.AddToRole(user.Id, "Docent");
                         var mailUser = UserManager.FindByName(model.UserName);
