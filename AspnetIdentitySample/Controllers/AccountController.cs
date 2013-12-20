@@ -84,8 +84,11 @@ namespace Examonitor.Controllers
 
             if (user != null)
             {
-                String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) + "/" + "Examonitor";
-
+                String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+                if (!Request.ApplicationPath.TrimEnd('/').Equals(""))
+                {
+                    url += Request.ApplicationPath.TrimEnd('/');
+                }
                 dynamic email = new Email("ResetPassword");
                 email.Url = url;
                 email.To = user.Email;
@@ -101,10 +104,6 @@ namespace Examonitor.Controllers
             {
                 ModelState.AddModelError("", "Foutieve email");
 
-                dynamic email = new Email("ResetPassword");
-                email.To = "test@foobar.com";
-                email.Send();
-
             }
 
             return View();
@@ -118,7 +117,11 @@ namespace Examonitor.Controllers
 
             if (user != null)
             {
-                String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) + "/" + "Examonitor";
+                String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+                if(!Request.ApplicationPath.TrimEnd('/').Equals(""))
+                {
+                    url += Request.ApplicationPath.TrimEnd('/');
+                }
 
                 dynamic email = new Email("ResetPassword");
                 email.Url = url;
@@ -134,10 +137,6 @@ namespace Examonitor.Controllers
             else
             {
                 ModelState.AddModelError("", "Foutieve email");
-
-                dynamic email = new Email("ResetPassword");
-                email.To = "test@foobar.com";
-                email.Send();
 
             }
 
@@ -157,8 +156,11 @@ namespace Examonitor.Controllers
 
                 if (result.Succeeded)
                 {
-                    String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) + "/" + "Examonitor";
-
+                    String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+                    if (!Request.ApplicationPath.TrimEnd('/').Equals(""))
+                    {
+                        url += Request.ApplicationPath.TrimEnd('/');
+                    }
                     if (user.UserName.Equals("Admin"))
                     {
                         user.Email = adminEmail;
@@ -203,8 +205,11 @@ namespace Examonitor.Controllers
 
             if (mailUser != null && !mailUser.IsConfirmed)
             {
-                String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) + "/" + "Examonitor";
-
+                String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+                if (!Request.ApplicationPath.TrimEnd('/').Equals(""))
+                {
+                    url += Request.ApplicationPath.TrimEnd('/');
+                }
                 dynamic email = new Email("Activate");
                 email.Url = url;
                 email.To = mailUser.Email;
@@ -300,8 +305,11 @@ namespace Examonitor.Controllers
 
                     if (result.Succeeded)
                     {
-                        String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) + "/" + "Examonitor";
-
+                        String url = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+                        if (!Request.ApplicationPath.TrimEnd('/').Equals(""))
+                        {
+                            url += Request.ApplicationPath.TrimEnd('/');
+                        }
                         UserManager.AddToRole(user.Id, "Docent");
                         var mailUser = UserManager.FindByName(model.UserName);
 
