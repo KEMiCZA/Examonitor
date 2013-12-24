@@ -26,7 +26,7 @@ aparte pagina in het adminpaneel, zo kunnen berichten worden aangemaakt en verwi
 <h3>Import</h3>
 <p>De administrators kunnen een JSON bestand importeren om de verschillende examens en campussen sneller toe te voegen.</p>
 <p>Voorbeeld JSON file:</p>
-<p><i>{
+<p><i><pre>{
 	&quot;monitorbeurten&quot;: [
 		{
 			&quot;monitorbeurt&quot;: 
@@ -51,7 +51,7 @@ aparte pagina in het adminpaneel, zo kunnen berichten worden aangemaakt en verwi
 			}
 		}
 	]
-}</i></p>
+}</pre></i></p>
 
 <h2>Installatie</h2>
 <h3>Web deploy</h3>
